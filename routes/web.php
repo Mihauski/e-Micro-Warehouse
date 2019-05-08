@@ -21,6 +21,10 @@ Route::get('/login', function() {
     return view('login');
 });
 
+Route::get('/login/lostpass', function() {
+	return view('login', ['action' => 'lostpass']);
+});
+
 //Routing to the stock view
 Route::get('/stock', function(){
     //przekazywanie zmiennych wygląda tak:
@@ -39,4 +43,32 @@ Route::get('/stock', function(){
         'item1',
         'item2'
     ]);
+});
+
+Route::get('/stock/search', function() {
+    return view('viewStock', ['action' => 'search']);
+});
+
+Route::get('/stock/add', function() {
+    return view('viewStock', ['action' => 'addProduct']);
+});
+
+Route::get('/reminders', function() {
+    return view('listReminders');
+});
+
+Route::get('/reminders/add', function() {
+    return view('listReminders', ['action' => 'addReminder']);
+});
+
+Route::get('/users', function() {
+    return view('manageUsers');
+});
+
+Route::get('/users/add', function() {
+    return view('manageUsers', ['action' => 'addUser']);
+});
+
+Route::get('/myaccount', function() {
+    return view('myAccount');
 });

@@ -7,7 +7,13 @@
 <!-- rozpoczyna sekcję "content" -->
 @section('content')
 
+    @if(!isset($action))
     <h1>sekcja testowa dla strony logowania</h1>
+    @endif
+
+    @if(isset($action) && $action == "lostpass")
+    <h1>Strona logowania - widok przywracania hasła</h1>
+    @endif
 
 <!-- kończy sekcję -->
 @endsection

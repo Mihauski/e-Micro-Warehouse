@@ -9,10 +9,12 @@
 
     <h1>sekcja testowa dla stanu magazynu</h1>
     <!-- mamy przekazany parametr $table, więc chcemy go teraz wypisać -->
-    @foreach($table as $tab)
+    @if(isset($table))
+        @foreach($table as $tab)
         <!-- wypisanie zmiennej -->
         <li>{{$tab}}</li>
-    @endforeach
+        @endforeach
+    @endif
 
 <!-- kończy sekcję -->
 @endsection
