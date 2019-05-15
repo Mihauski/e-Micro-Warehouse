@@ -13,8 +13,8 @@
     </head>
     <body>
         <div class="container-fluid">
-            <div class="row topmenu">
-                <div class="col">
+            <div class="row topmenu sticky-top">
+                <div class="col sticky-top">
                         <nav class="navbar navbar-expand-lg sticky-top"> 
                             <a class="navbar-brand" href="#">Navbar</a>                 
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,6 +35,7 @@
             <div class="row content">
                 <div class="col">
             @yield('content')
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
                 </div>
             </div>
         </div>
