@@ -16,11 +16,11 @@
             <div class="row topmenu sticky-top">
                 <div class="col sticky-top">
                         <nav class="navbar navbar-expand-lg sticky-top"> 
-                            <a class="navbar-brand" href="#">Navbar</a>                 
+                            <a class="navbar-brand" href="#">Logo</a>                 
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon">toggle</span>
                             </button>
-                            <div class="collapse navbar-collapse" id="navbarMenu"> 
+                            <div class="collapse navbar-collapse justify-content-end nav-pills" id="navbarMenu"> 
                                 <div class="navbar-nav">      
                                     <a class="nav-link active" href="index.html">Strona Główna</a>
                                     <a class="nav-link" href="o-mnie.html">O Mnie</a>
@@ -34,14 +34,13 @@
             </div>
             <div class="row content">
                 <div class="col">
-            @yield('content')
-            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                    @yield('content')
                 </div>
             </div>
         </div>
 
         <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
         <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
-        <!-- <script type="text/javascript" src="js/functions.js"></script> -->
+        <script type="text/javascript" src="js/functions.js"></script>
     </body>
 </html>

@@ -12,63 +12,15 @@
 */
 
 //routing na stronę powitalną. Resources->Views->[welcome].blade.php
-Route::get('/', function () {
-    return view('welcome');
-});
-
-//routing to the login page. Resources->Views->[login].blade.php
-Route::get('/login', function() {
-    return view('login');
-});
-
-Route::get('/login/lostpass', function() {
-	return view('login', ['action' => 'lostpass']);
-});
-
-//Routing to the stock view
-Route::get('/stock', function(){
-    //przekazywanie zmiennych wygląda tak:
-    //definiujemy sobie jakąś tam zmienną
-    /*$table = [
-        'item1',
-        'item2'
-    ];
-    //przekazujemy teraz tabelę jako parametr do funkcji view
-    return view('viewStock', [
-        'table' => $table
-    ]);*/
-
-    //albo jeszcze inaczej:
-    return view('viewStock')->withTable([
-        'item1',
-        'item2'
-    ]);
-});
-
-Route::get('/stock/search', function() {
-    return view('viewStock', ['action' => 'search']);
-});
-
-Route::get('/stock/add', function() {
-    return view('viewStock', ['action' => 'addProduct']);
-});
-
-Route::get('/reminders', function() {
-    return view('listReminders');
-});
-
-Route::get('/reminders/add', function() {
-    return view('listReminders', ['action' => 'addReminder']);
-});
-
-Route::get('/users', function() {
-    return view('manageUsers');
-});
-
-Route::get('/users/add', function() {
-    return view('manageUsers', ['action' => 'addUser']);
-});
-
-Route::get('/myaccount', function() {
-    return view('myAccount');
-});
+Route::get('/', 'PageController@home');
+Route::get('/login', 'PageController@login');
+Route::get('/login/lostpass', 'PageController@lostpass');
+Route::get('/stock', 'PageController@stock');
+Route::get('/stock/search', 'PageController@stocksearch');
+Route::get('/stock/add', 'PageController@stockadd');
+Route::get('/reminders', 'PageController@reminders');
+Route::get('/reminders/add', 'PageController@remindersadd');
+Route::get('/users', 'PageController@users');
+Route::get('/users/add', 'PageController@usersadd');
+Route::get('/myaccounts', 'PageController@myaccount');
+Route::get('/test', 'PageController@test');

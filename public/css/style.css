@@ -3,12 +3,27 @@
 }
 
 /* Bootstrap override! */
-div.container-fluid {
-    /* padding:0; */
+
+.nav-link, .navbar-brand {
+    color:rgb(182, 34, 1);
 }
 
+a.navbar-brand {
+    margin-left:40px;
+}
+
+a.nav-link {
+    margin-right:2rem;
+}
+
+.nav-pills .nav-link.active {
+    background-color:rgb(182, 34, 1);
+}
+
+/* End of bootstrap overrides */
+
 div.topmenu {
-    padding:15px 10px;
+    padding:15px 10px 0px 10px;
     background:white;
     z-index:1000;
 }
@@ -17,16 +32,19 @@ div.topmenu:after {
     content:""; 
     background: rgb(194,54,22);  
     top: 0; 
-    margin:0 auto; 
+    margin:0 auto;
+    margin-top:10px; 
     height: 1px; 
     width: 90vw;
     box-shadow: 0px 1px 3px 0px rgba(194,54,22,0.45);
+    transition:all .5s ease-in-out;
   }
 
-div.topmenu.row {
-    margin:0;
+div.topmenu.scroll:after {
+    width:100vw !important;
+    transition:all .5s ease-in-out;
 }
 
 div.content {
-    padding-top:calc;
+    
 }
