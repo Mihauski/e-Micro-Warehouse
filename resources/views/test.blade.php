@@ -2,7 +2,7 @@
 <!-- jeśli w /views/ jest podfolder /modern/, a tam plik layout.blade.php, to będzie to 'modern.layout' lub 'modern/layout' -->
 @extends('layout')
 
-@section('title','viewStock')
+@section('title','Strona testowa :: eMW')
 
 <!-- rozpoczyna sekcję "content" -->
 @section('content')
@@ -117,9 +117,9 @@
           </article>
           <article id="text__tables">
             <header><h1>Tabular data</h1></header>
-            <table>
+            <table class="table table-striped table-hover">
               <caption>Table Caption</caption>
-              <thead>
+              <thead class="thead-light">
                 <tr>
                   <th>Table Heading 1</th>
                   <th>Table Heading 2</th>
@@ -281,49 +281,51 @@
           <form>
             <fieldset id="forms__input">
               <legend>Input fields</legend>
-              <p>
-                <label for="input__text">Text Input</label>
-                <input id="input__text" type="text" placeholder="Text Input">
-              </p>
-              <p>
-                <label for="input__password">Password</label>
-                <input id="input__password" type="password" placeholder="Type your Password">
-              </p>
-              <p>
-                <label for="input__webaddress">Web Address</label>
-                <input id="input__webaddress" type="url" placeholder="http://yoursite.com">
-              </p>
-              <p>
-                <label for="input__emailaddress">Email Address</label>
-                <input id="input__emailaddress" type="email" placeholder="name@email.com">
-              </p>
-              <p>
-                <label for="input__phone">Phone Number</label>
-                <input id="input__phone" type="tel" placeholder="(999) 999-9999">
-              </p>
-              <p>
-                <label for="input__search">Search</label>
-                <input id="input__search" type="search" placeholder="Enter Search Term">
-              </p>
-              <p>
-                <label for="input__text2">Number Input</label>
-                <input id="input__text2" type="number" placeholder="Enter a Number">
-              </p>
-              <p>
-                <label for="input__text3" class="error">Error</label>
-                <input id="input__text3" class="is-error" type="text" placeholder="Text Input">
-              </p>
-              <p>
-                <label for="input__text4" class="valid">Valid</label>
-                <input id="input__text4" class="is-valid" type="text" placeholder="Text Input">
-              </p>
+              <div class="col-3">
+                <p>
+                  <label for="input__text">Text Input</label>
+                  <input id="input__text" type="text" class="form-control" placeholder="Text Input">
+                </p>
+                <p>
+                  <label for="input__password">Password</label>
+                  <input id="input__password" type="password" placeholder="Type your Password" class="form-control">
+                </p>
+                <p>
+                  <label for="input__webaddress">Web Address</label>
+                  <input id="input__webaddress" type="url" placeholder="http://yoursite.com" class="form-control">
+                </p>
+                <p>
+                  <label for="input__emailaddress">Email Address</label>
+                  <input id="input__emailaddress" type="email" placeholder="name@email.com" class="form-control">
+                </p>
+                <p>
+                  <label for="input__phone">Phone Number</label>
+                  <input id="input__phone" type="tel" placeholder="(999) 999-9999" class="form-control">
+                </p>
+                <p>
+                  <label for="input__search">Search</label>
+                  <input id="input__search" type="search" placeholder="Enter Search Term" class="form-control">
+                </p>
+                <p>
+                  <label for="input__text2">Number Input</label>
+                  <input id="input__text2" type="number" placeholder="Enter a Number" class="form-control">
+                </p>
+                <p>
+                  <label for="input__text3" class="error">Error</label>
+                  <input id="input__text3" class="is-error form-control" type="text" placeholder="Text Input">
+                </p>
+                <p>
+                  <label for="input__text4" class="valid">Valid</label>
+                  <input id="input__text4" class="is-valid form-control" type="text" placeholder="Text Input">
+                </p>
+              </div>
             </fieldset>
             <p><a href="#top">[Top]</a></p>
             <fieldset id="forms__select">
               <legend>Select menus</legend>
               <p>
                 <label for="select">Select</label>
-                <select id="select">
+                <select id="select" class="custom-select">
                   <optgroup label="Option Group">
                     <option>Option One</option>
                     <option>Option Two</option>
@@ -355,7 +357,7 @@
               <legend>Textareas</legend>
               <p>
                 <label for="textarea">Textarea</label>
-                <textarea id="textarea" rows="8" cols="48" placeholder="Enter your message here"></textarea>
+                <textarea id="textarea" rows="8" cols="48" placeholder="Enter your message here" class="form-control"></textarea>
               </p>
             </fieldset>
             <p><a href="#top">[Top]</a></p>
@@ -367,47 +369,47 @@
               </p>
               <p>
                 <label for="in">Number input</label>
-                <input type="number" id="in" min="0" max="10" value="5">
+                <input type="number" id="in" min="0" max="10" value="5" class="form-control">
               </p>
               <p>
                 <label for="ir">Range input</label>
-                <input type="range" id="ir" value="10">
+                <input type="range" id="ir" value="10" class="custom-range">
               </p>
               <p>
                 <label for="idd">Date input</label>
-                <input type="date" id="idd" value="1970-01-01">
+                <input type="date" id="idd" value="1970-01-01" class="form-control">
               </p>
               <p>
                 <label for="idm">Month input</label>
-                <input type="month" id="idm" value="1970-01">
+                <input type="month" id="idm" value="1970-01" class="form-control">
               </p>
               <p>
                 <label for="idw">Week input</label>
-                <input type="week" id="idw" value="1970-W01">
+                <input type="week" id="idw" value="1970-W01" class="form-control">
               </p>
               <p>
                 <label for="idt">Datetime input</label>
-                <input type="datetime" id="idt" value="1970-01-01T00:00:00Z">
+                <input type="datetime" id="idt" value="1970-01-01T00:00:00Z" class="form-control">
               </p>
               <p>
                 <label for="idtl">Datetime-local input</label>
-                <input type="datetime-local" id="idtl" value="1970-01-01T00:00">
+                <input type="datetime-local" id="idtl" value="1970-01-01T00:00" class="form-control">
               </p>
             </fieldset>
             <p><a href="#top">[Top]</a></p>
             <fieldset id="forms__action">
               <legend>Action buttons</legend>
               <p>
-                <input type="submit" value="<input type=submit>">
-                <input type="button" value="<input type=button>">
-                <input type="reset" value="<input type=reset>">
-                <input type="submit" value="<input disabled>" disabled>
+                <input type="submit" value="<input type=submit>" class="btn btn-outline-primary">
+                <input type="button" value="<input type=button>" class="btn btn-outline-primary">
+                <input type="reset" value="<input type=reset>" class="btn btn-outline-danger">
+                <input type="submit" value="<input disabled>" disabled class="btn btn-outline-secondary">
               </p>
               <p>
-                <button type="submit">&lt;button type=submit&gt;</button>
-                <button type="button">&lt;button type=button&gt;</button>
-                <button type="reset">&lt;button type=reset&gt;</button>
-                <button type="button" disabled>&lt;button disabled&gt;</button>
+                <button type="submit" class="btn btn-outline-primary">&lt;button type=submit&gt;</button>
+                <button type="button" class="btn btn-outline-primary">&lt;button type=button&gt;</button>
+                <button type="reset" class="btn btn-outline-danger">&lt;button type=reset&gt;</button>
+                <button type="button" disabled class="btn btn-outline-secondary">&lt;button disabled&gt;</button>
               </p>
             </fieldset>
             <p><a href="#top">[Top]</a></p>

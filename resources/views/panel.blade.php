@@ -2,12 +2,12 @@
 <!-- jeśli w /views/ jest podfolder /modern/, a tam plik layout.blade.php, to będzie to 'modern.layout' lub 'modern/layout' -->
 @extends('layout')
 
-@section('title','Alarmy :: eMW')
+@section('title','Panel Kontrolny :: eMW')
 
 <!-- rozpoczyna sekcję "content" -->
 @section('content')
 
-Reminders modules here
+Panel modules here
 
 <!-- kończy sekcję -->
 @endsection

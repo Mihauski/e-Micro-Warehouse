@@ -2,7 +2,7 @@
 <!-- jeśli w /views/ jest podfolder /modern/, a tam plik layout.blade.php, to będzie to 'modern.layout' lub 'modern/layout' -->
 @extends('layout')
 
-@section('title','viewStock')
+@section('title','Magazyn :: eMW')
 
 <!-- rozpoczyna sekcję "content" -->
 @section('content')

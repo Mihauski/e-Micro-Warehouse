@@ -11,7 +11,7 @@
 |
 */
 
-//routing na stronę powitalną. Resources->Views->[welcome].blade.php
+//routing przerzucony na PageController
 Route::get('/', 'PageController@home');
 Route::get('/login', 'PageController@login');
 Route::get('/login/lostpass', 'PageController@lostpass');
@@ -22,5 +22,5 @@ Route::get('/reminders', 'PageController@reminders');
 Route::get('/reminders/add', 'PageController@remindersadd');
 Route::get('/users', 'PageController@users');
 Route::get('/users/add', 'PageController@usersadd');
-Route::get('/myaccounts', 'PageController@myaccount');
+Route::get('/myaccount', 'PageController@myaccount');
 Route::get('/test', 'PageController@test');

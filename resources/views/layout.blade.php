@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>@yield('title', 'Domyślny tytuł')</title>
+        <title>@yield('title', 'eMicro Warehouse')</title>
         <meta name="description" content="Programista aplikacji webowych, student, pasjonat informatyki. Chcesz dowiedzieć się czegoś więcej o mnie i moich projektach? Zapraszam!">
         <meta name="keywords" content="HTML,CSS,JavaScript,PHP,web,design,michalski,bootstrap,purecss">
         <meta name="author" content="Michał Michalski">
@@ -16,17 +16,22 @@
             <div class="row topmenu sticky-top">
                 <div class="col sticky-top">
                         <nav class="navbar navbar-expand-lg sticky-top"> 
-                            <a class="navbar-brand" href="#">Logo</a>                 
+                            <a class="navbar-brand" href="/">Logo</a>                 
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon">toggle</span>
                             </button>
                             <div class="collapse navbar-collapse justify-content-end nav-pills" id="navbarMenu"> 
-                                <div class="navbar-nav">      
-                                    <a class="nav-link active" href="index.html">Strona Główna</a>
-                                    <a class="nav-link" href="o-mnie.html">O Mnie</a>
-                                    <a class="nav-link" href="moje-projekty.html">Moje Projekty</a>
-                                    <a class="nav-link" href="moje-cele.html">Moje cele</a>
-                                    <a class="nav-link" href="kontakt.html">Kontakt</a>
+                                <div class="navbar-nav">
+                                @php
+                                    //TESTING PURPOSES. REMOVE AFTER FINISHING!
+                                    $alarms = 5;
+                                @endphp 
+                                    <a class="nav-link @if ($_SERVER['REQUEST_URI'] === '/') active @endif" href="/">Panel Kontrolny</a>
+                                    <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/stock') active @endif" href="/stock">Magazyn</a>
+                                    <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/reminders') active @endif" href="/reminders">Alarmy @if(isset($alarms) && ($alarms > 0))<sup class="menualarm">{{$alarms}}</sup>@endif</a>
+                                    <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/users') active @endif" href="/users">Użytkownicy</a>
+                                    <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/myaccount') active @endif" href="/myaccount">Moje Konto</a>
+                                    <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/login') active @endif" href="/login">Zaloguj</a>
                                 </div>
                             </div>
                          </nav>
