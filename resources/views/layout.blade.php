@@ -1,3 +1,12 @@
+@php
+    use Illuminate\Http\Request;
+    //Importy dla modeli poszczególnych tabel
+    use App\alarm;
+    use App\stock;
+
+    $alarms = stock::where('alarm',1)->count();
+@endphp
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -23,10 +32,6 @@
                             </button>
                             <div class="collapse navbar-collapse justify-content-end nav-pills" id="navbarMenu"> 
                                 <div class="navbar-nav">
-                                @php
-                                    //TESTING PURPOSES. REMOVE AFTER FINISHING!
-                                    $alarms = 5;
-                                @endphp 
                                     <a class="nav-link @if ($_SERVER['REQUEST_URI'] === '/') active @endif" href="/">Panel Kontrolny</a>
                                     <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/stock') active @endif" href="/stock">Magazyn</a>
                                     <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/reminders') active @endif" href="/reminders">Alarmy @if(isset($alarms) && ($alarms > 0))<sup class="menualarm">{{$alarms}}</sup>@endif</a>

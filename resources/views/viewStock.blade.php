@@ -29,7 +29,7 @@
                   <td>{{ $item->ilosc }}</td>
                   <td>{{ $item->jednostka }}</td>
                   <td>{{ $item->uwagi }}</td>
-                  <td>{{ $item->alarm }}</td>
+                  <td>@if($item->alarm === 1) TAK @else NIE @endif</td>
                   <td class="stockAction"><button type="submit" class="btn btn-outline-primary btn-sm"><i class="far fa-edit"></i> Edytuj</button> <button type="submit" class="btn btn-outline-danger btn-sm"><i class="far fa-trash-alt"></i> Usuń</button></td>
                 </tr>
                 @endforeach
