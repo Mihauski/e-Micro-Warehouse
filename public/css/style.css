@@ -77,3 +77,11 @@ sup.menualarm {
     font-size:medium;
     top:-5px;
 }
+
+tr.alarm {
+    background-color:rgba(255, 0, 0, 0.3) !important;
+}
+
+td.stockAction {
+    width:16%;
+}

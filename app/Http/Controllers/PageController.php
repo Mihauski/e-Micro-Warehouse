@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+//Importy dla modeli poszczególnych tabel
+use App\stock;
+use App\alarm;
 
 class PageController extends Controller
 {
@@ -20,10 +23,10 @@ class PageController extends Controller
     }
 
     public function stock() {
-        return view('viewStock')->withTable([
-            'item1',
-            'item2'
-        ]);
+        //pobieramy wszystkie obiekty z bazy
+        $stock = stock::all();
+        //compact() przekazuje nam dane w formie uproszczonej i bardziej czytelnej
+        return view('viewStock', compact('stock'));
     }
 
     public function stocksearch() {
