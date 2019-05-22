@@ -85,3 +85,40 @@ tr.alarm {
 td.stockAction {
     width:16%;
 }
+
+/* Style the button that is used to open and close the collapsible content */
+.collapsible {
+    background-color: #eee;
+    color: grey;
+    cursor: pointer;
+    padding: 2px 5px 2px 5px;
+    width: 100%;
+    border: 1px solid silver;
+    border-radius:5px;
+    text-align: center;
+    outline: none;
+    font-size: 15px;
+    font-weight:bold;
+  }
+  
+  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+  .active, .collapsible:hover, .collapsible:focus {
+    background-color: rgb(52, 194, 99);
+    color:white;
+    border-color:white;
+    border-bottom-left-radius:0;
+    border-bottom-right-radius:0;
+    outline:none;
+  }
+  
+  /* Style the collapsible content. Note: hidden by default */
+  .collapsible-content {
+    padding: 0 18px;
+    /* display: none; */
+    overflow: hidden;
+    background-color: #f1f1f1;
+    max-height:0;
+    transition: max-height 0.2s ease-out;
+    border-bottom-left-radius:5px;
+    border-bottom-right-radius:5px;
+  }
