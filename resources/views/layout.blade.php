@@ -16,6 +16,7 @@
         <meta name="author" content="Michał Michalski">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta charset="UTF-8">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
         <link type="text/css" rel="stylesheet" href="css/style.css"/>

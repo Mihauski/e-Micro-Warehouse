@@ -40,9 +40,9 @@ class stockDBOps extends Controller
 
         $result = $stock->save();
         if($result == true) {
-            return "true";
+            return json_encode("true");
         } else {
-            return "false";
+            return json_encode("false");
         }
     }
 

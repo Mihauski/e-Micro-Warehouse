@@ -46,3 +46,34 @@ for(let i=0;i<spans.length;i++){
       }
     }
 }
+
+//AJAX FORM CODE
+$(document).ready(function() {
+  $('form').submit(function(event) {
+      var formData = {
+        '_token': $('meta[name="csrf-token"]').attr('content'),
+          'id': $('input[name=id]').val(),
+          'nazwa': $('input[name=nazwa]').val(),
+          'typ': $('input[name=typ]').val(),
+          'ilosc': $('input[name=ilosc]').val(),
+          'jednostka': $('input[name=jednostka]').val(),
+          'uwagi': $('textarea').val(),
+          'alarm': $('input[name=alarm]').val()
+      };
+
+      $.ajax({
+          type: 'POST',
+          url: '/stock/edit',
+          data: formData,
+          dataType: 'json',
+          success: function(Result) {
+            if(Result == "true") {
+              alert('Works!');
+            } else if(Result == "false") {
+              alert('Fuck!');
+            }
+          }
+      });
+      event.preventDefault();
+  });
+});

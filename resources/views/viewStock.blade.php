@@ -49,6 +49,7 @@
                   <!-- Modal content -->
                   <div class="modal-content">
                   <span class="close">&times; <font size="5pt">Zamknij</font></span>
+
                   <form action="/stock/edit" method="post">
                     @csrf
                     <label class="sr-only" for="id">ID</label>
@@ -114,8 +115,9 @@
                       </div>
                     </div>
                     <input type="hidden" name="action" value="edit"/>
+                    <input type="hidden" name="csrf" value="{{ csrf_token() }}"/>
 
-                      <input type="submit" value="Zaktualizuj" class="btn btn-outline-success float-right">
+                      <input type="submit" value="Zaktualizuj" class="btn btn-outline-success float-right" name="submit">
                   </form> 
                   </div>
                   </div>
