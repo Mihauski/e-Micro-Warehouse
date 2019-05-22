@@ -25,3 +25,24 @@ for (i = 0; i < coll.length; i++) {
     this.classList.toggle("active"); 
   });
 }
+
+//modal Window
+var modals = document.getElementsByClassName('modal');
+// Get the button that opens the modal
+var btns = document.getElementsByClassName("openmodal");
+var spans=document.getElementsByClassName("close");
+for(let i=0;i<btns.length;i++){
+    btns[i].onclick = function() {
+        modals[i].style.display = "block";
+    }
+}
+for(let i=0;i<spans.length;i++){
+    spans[i].onclick = function() {
+        modals[i].style.display = "none";
+    }
+    window.onclick = function(event) {
+      if (event.target == modals[i]) {
+        modals[i].style.display = "none";
+      }
+    }
+}
