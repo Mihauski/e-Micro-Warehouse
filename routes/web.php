@@ -26,3 +26,4 @@ Route::get('/users', 'PageController@users');
 Route::get('/users/add', 'PageController@usersadd');
 Route::get('/myaccount', 'PageController@myaccount');
 Route::get('/test', 'PageController@test');
+Route::get('/stock/refresh', 'PageController@refreshStock');

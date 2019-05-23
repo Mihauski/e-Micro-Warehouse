@@ -29,6 +29,14 @@ class PageController extends Controller
         return view('viewStock', compact('stock'));
     }
 
+    public function refreshStock() {
+        $stock = stock::all();
+
+        $html = view('viewStock-table', compact('stock'))->render();
+
+        return response()->json(compact('html'));
+    }
+
     public function stocksearch() {
         return view('viewStock', ['action' => 'search']);
     }
