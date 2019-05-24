@@ -10,14 +10,14 @@ use App\alarm;
 
 class stockDBOps extends Controller
 {
-    public function edit() {
-       $id = $_POST['id'] ?? null;
-       $nazwa = $_POST['nazwa'] ?? null;
-       $typ = $_POST['typ'] ?? null;
-       $ilosc = $_POST['ilosc'] ?? null;
-       $jednostka = $_POST['jednostka'] ?? null;
-       $uwagi = $_POST['uwagi'] ?? null;
-       $alarm = $_POST['alarm'] ?? null;
+    public function edit(Request $request) {
+        $id = $request->id;
+        $nazwa = $request->nazwa;
+        $typ = $request->typ;
+        $ilosc = $request->ilosc;
+        $jednostka = $request->jednostka;
+        $alarm = $request->alarm;
+        $uwagi = $request->uwagi;
 
         $stock = \App\stock::find($id);
         $alarms = \App\alarm::where('prod_id', $id)->get();
@@ -31,6 +31,32 @@ class stockDBOps extends Controller
             }
         }
 
+        if(!empty($nazwa)) $stock->nazwa = $nazwa;
+        if(!empty($typ)) $stock->typ = $typ;
+        if(!empty($ilosc)) $stock->ilosc = $ilosc;
+        if(!empty($jednostka)) $stock->jednostka = $jednostka;
+        $stock->alarm = $alarm;
+        $stock->uwagi = $uwagi;
+
+        
+        if($stock->save() == true) {
+            //return json_encode("true");
+            return redirect('/stock')->with('statustext', 'Dane zaktualizowane pomyślnie!')->with('status',true);
+        } else {
+            //return json_encode("false");
+            return redirect('/stock')->with('statustext', 'Aktualizacja nie powiodła się!')->with('status',false);
+        }
+    }
+
+    public function add(Request $request) {
+        $nazwa = $request->nazwa;
+        $typ = $request->typ;
+        $ilosc = $request->ilosc;
+        $jednostka = $request->jednostka;
+        $alarm = 0;
+        $uwagi = $request->uwagi ?? null;
+
+        $stock = new \App\stock;
         $stock->nazwa = $nazwa;
         $stock->typ = $typ;
         $stock->ilosc = $ilosc;
@@ -38,19 +64,24 @@ class stockDBOps extends Controller
         $stock->alarm = $alarm;
         $stock->uwagi = $uwagi;
 
-        $result = $stock->save();
-        if($result == true) {
-            return json_encode("true");
+        if($nazwa != null && $typ != null && $ilosc != null && ($jednostka != null && strlen($jednostka) <= 3)) {
+            if($stock->save()) {
+                return redirect('/stock')->with('statustext', 'Produkt dodany pomyślnie!')->with('status', true);
+            }
+        } else
+                return redirect('/stock')->with('statustext', 'Nie udało się dodać produktu.')->with('status',false);
+    }
+
+    public function delete(Request $request) {
+        $id = $request->id;
+        $stock = \App\stock::find($id);
+
+        if($stock->count() > 0) {
+            if(($stock->delete() == true)) {
+                return redirect('/stock')->with('statustext', 'Produkt usunięty!')->with('status', true);
+            }
         } else {
-            return json_encode("false");
+            return redirect('/stock')->with('statustext', 'Usuwanie produktu nie powiodło się.')->with('status',false);
         }
-    }
-
-    public function add() {
-
-    }
-
-    public function delete() {
-
     }
 }

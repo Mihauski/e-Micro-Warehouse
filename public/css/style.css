@@ -24,7 +24,33 @@ input[type="radio"].form-check-input:first-child {
     margin-left: 10px;
 }
 
+@keyframes fade {
+  0%{ opacity: 0 }
+  100% { opacity: 1 }
+}
+
+div.alert {
+  animation:fade 1s ease-in-out;
+  padding: 0rem 1.25rem;
+}
+
+.alert div,
+.alert span{
+    padding-left: 15px;
+    vertical-align:middle;
+    display:inline;
+    font-size:15pt
+}
+
 /* End of bootstrap overrides */
+
+.alert .glyphicon{
+  display:inline;
+  color:white;
+  font-size:50px;
+}
+
+
 
 div.topmenu {
     padding:15px 10px 0px 10px;
@@ -90,6 +116,10 @@ td.stockAction {
     width:16%;
 }
 
+button.openmodaladd {
+  margin: 0 0 5px 0;
+}
+
 /* Style the button that is used to open and close the collapsible content */
 .collapsible {
     background-color: #eee;
@@ -120,7 +150,7 @@ td.stockAction {
     padding: 0 18px;
     /* display: none; */
     overflow: hidden;
-    background-color: #f1f1f1;
+    background-color: white;
     max-height:0;
     transition: max-height 0.2s ease-out;
     border-bottom-left-radius:5px;
@@ -128,7 +158,7 @@ td.stockAction {
   }
 
   /* The Modal (background) */
-.modal {
+.modal, .modaldel, .modaladd {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1001; /* Sit on top */
@@ -163,16 +193,20 @@ td.stockAction {
   }
   
   /* The Close Button */
-  .close {
+  .close, .closedel, .closeadd {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
     padding-bottom:25px;
   }
+
+  .closedel, .closeadd {
+    padding-bottom:0px !important;
+  }
   
   .close:hover,
-  .close:focus {
+  .close:focus, .closedel:hover, .closedel:focus, .closeadd:focus, .closeadd:hover {
     color: #000;
     text-decoration: none;
     cursor: pointer;
@@ -180,4 +214,8 @@ td.stockAction {
 
   .modalfield {
       min-width:100px;
+  }
+
+  .modalselect {
+    text-align-last:center;
   }

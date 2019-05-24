@@ -26,8 +26,12 @@
     });
   }
 
+  $(document).ready(function() {
+    $('.alert').delay(5000).fadeOut(1000);
+  });
   
-//modal Window
+  $(document).ready(function() {
+  //modal Window
   //catch all modals
   var modals = document.getElementsByClassName('modal');
   // Get the buttons that opens the modal
@@ -50,6 +54,59 @@
         }
       }
     }
+});
+
+$(document).ready(function() {
+  //modal Window
+  //catch all modals
+  var modals = document.getElementsByClassName('modaldel');
+  // Get the buttons that opens the modal
+  var btns = document.getElementsByClassName("openmodaldel");
+  //get the close buttons
+  var spans=document.getElementsByClassName("closedel");
+
+  for(let i=0;i<btns.length;i++){
+      btns[i].onclick = function() {
+          modals[i].style.display = "block";
+      }
+  }
+  for(let i=0;i<spans.length;i++){
+      spans[i].onclick = function() {
+          modals[i].style.display = "none";
+      }
+      window.onclick = function(event) {
+        if (event.target == modals[i]) {
+          modals[i].style.display = "none";
+        }
+      }
+    }
+});
+
+$(document).ready(function() {
+  //modal Window
+  //catch all modals
+  var modals = document.getElementsByClassName('modaladd');
+  // Get the buttons that opens the modal
+  var btns = document.getElementsByClassName("openmodaladd");
+  //get the close buttons
+  var spans=document.getElementsByClassName("closeadd");
+
+  for(let i=0;i<btns.length;i++){
+      btns[i].onclick = function() {
+          modals[i].style.display = "block";
+      }
+  }
+  for(let i=0;i<spans.length;i++){
+      spans[i].onclick = function() {
+          modals[i].style.display = "none";
+      }
+      window.onclick = function(event) {
+        if (event.target == modals[i]) {
+          modals[i].style.display = "none";
+        }
+      }
+    }
+});
 
 /*  //AJAX FORM CODE
     $('form').submit(function(event) {
