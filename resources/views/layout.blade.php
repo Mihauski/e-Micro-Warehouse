@@ -27,7 +27,7 @@
             <div class="row topmenu sticky-top">
                 <div class="col sticky-top">
                         <nav class="navbar navbar-expand-lg sticky-top"> 
-                            <a class="navbar-brand" href="/">Logo</a>                 
+                            <a class="navbar-brand" href="/">Logo :: eMicro Warehouse</a>                 
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon">toggle</span>
                             </button>
