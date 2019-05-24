@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 24 Maj 2019, 22:25
+-- Czas generowania: 24 Maj 2019, 23:00
 -- Wersja serwera: 10.1.38-MariaDB
 -- Wersja PHP: 7.3.2
 
@@ -94,8 +94,8 @@ CREATE TABLE `stocks` (
 --
 
 INSERT INTO `stocks` (`id`, `created_at`, `updated_at`, `nazwa`, `typ`, `ilosc`, `jednostka`, `alarm`, `uwagi`) VALUES
-(1, '2019-05-22 10:10:04', '2019-05-24 18:24:21', 'Mąka ryżowa', 'Mąka', 20, 'kg', 1, 'Nieopłacona faktura! Opłacić przed zakupem kolejnych!'),
-(2, '2019-05-22 16:35:36', '2019-05-24 15:46:27', 'Cukier gruboziarnisty', 'Cukier', 24, 'kg', 0, ''),
+(1, '2019-05-22 10:10:04', '2019-05-24 18:36:59', 'Mąka ryżowa', 'Mąka', 20, 'kg', 1, 'Nieopłacona faktura! Opłacić przed zakupem kolejnych!'),
+(2, '2019-05-22 16:35:36', '2019-05-24 18:37:03', 'Cukier gruboziarnisty', 'Cukier', 24, 'kg', 1, NULL),
 (8, '2019-05-24 16:01:38', '2019-05-24 16:01:38', 'Syrop klonowy', 'Syrop', 22, 'l', 0, NULL),
 (9, '2019-05-24 16:50:10', '2019-05-24 16:55:37', 'test2', 'test', 4, 'szt', 0, NULL);
 
@@ -107,15 +107,23 @@ INSERT INTO `stocks` (`id`, `created_at`, `updated_at`, `nazwa`, `typ`, `ilosc`,
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `login` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `rola` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `role` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Zrzut danych tabeli `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`, `role`) VALUES
+(1, 'Michał', 'm.mic.michalski@gmail.com', '$2y$10$XO5ucILs1BIu1x9y009nIOmpt04IqJ0Rdic83yy0xFKz.jevY21Fe', NULL, NULL, '2019-05-24 18:57:19', '2019-05-24 18:57:19', 'user'),
+(2, 'Michał', 'czarny.aster@gmail.com', '$2y$10$2azcHwJoEAP9GkAILhYQn.VXWEVioAUA0RQjqJbS6L9uhBvLpt12m', NULL, NULL, '2019-05-24 18:59:55', '2019-05-24 18:59:55', 'user');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -172,13 +180,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT dla tabeli `stocks`
 --
 ALTER TABLE `stocks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
