@@ -20,9 +20,9 @@
         <meta charset="UTF-8">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
-        <link type="text/css" rel="stylesheet" href="css/style.css"/>
-        <link rel="stylesheet" href="css/fontawesome.css"/>
+        <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css"/>
+        <link type="text/css" rel="stylesheet" href="/css/style.css"/>
+        <link rel="stylesheet" href="/css/fontawesome.css"/>
     </head>
     <body>
         <div class="container-fluid">
