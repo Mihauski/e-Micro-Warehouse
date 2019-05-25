@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 //Importy dla modeli poszczególnych tabel
 use App\stock;
 use App\alarm;
@@ -11,6 +12,10 @@ class PageController extends Controller
 {
     //page controller
     public function home() {
+        return view('home');
+    }
+
+    public function panel() {
         return view('panel');
     }
 
@@ -24,13 +29,17 @@ class PageController extends Controller
 
     public function stock() {
         //pobieramy wszystkie obiekty z bazy
-        $stock = stock::all();
+        if (Auth::check()) {
+            $stock = stock::all();
+        }
         //compact() przekazuje nam dane w formie uproszczonej i bardziej czytelnej
         return view('viewStock', compact('stock'));
     }
 
     public function refreshStock() {
-        $stock = stock::all();
+        if (Auth::check()) {
+            $stock = stock::all();
+        }
 
         $html = view('viewStock-table', compact('stock'))->render();
 

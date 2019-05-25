@@ -1,10 +1,12 @@
 @php
     use Illuminate\Http\Request;
-    //Importy dla modeli poszczególnych tabel
-    use App\alarm;
-    use App\stock;
+        //Importy dla modeli poszczególnych tabel
+        use App\alarm;
+        use App\stock;
 
-    $alarms = stock::where('alarm',1)->count();
+        if (Auth::check()) {
+            $alarms = stock::where('alarm',1)->count();
+        }
 @endphp
 
 <!DOCTYPE html>
@@ -33,12 +35,22 @@
                             </button>
                             <div class="collapse navbar-collapse justify-content-end nav-pills" id="navbarMenu"> 
                                 <div class="navbar-nav">
-                                    <a class="nav-link @if ($_SERVER['REQUEST_URI'] === '/') active @endif" href="/">Panel Kontrolny</a>
-                                    <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/stock') active @endif" href="/stock">Magazyn</a>
-                                    <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/reminders') active @endif" href="/reminders">Alarmy @if(isset($alarms) && ($alarms > 0))<sup class="menualarm">{{$alarms}}</sup>@endif</a>
-                                    <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/users') active @endif" href="/users">Użytkownicy</a>
-                                    <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/myaccount') active @endif" href="/myaccount">Moje Konto</a>
+                                    @if(Auth::check())
+                                        <a class="nav-link @if ($_SERVER['REQUEST_URI'] === '/panel') active @endif" href="/panel">Panel Kontrolny</a>
+                                        <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/stock') active @endif" href="/stock">Magazyn</a>
+                                        <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/reminders') active @endif" href="/reminders">Alarmy @if(isset($alarms) && ($alarms > 0) && (Auth::check()))<sup class="menualarm">{{$alarms}}</sup>@endif</a>
+                                        <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/users') active @endif" href="/users">Użytkownicy</a>
+                                        <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/myaccount') active @endif" href="/myaccount">Moje Konto</a>
+                                    @endif
+                                    @guest
                                     <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/login') active @endif" href="/login">Zaloguj</a>
+                                    @endguest
+                                    @if(Auth::check())
+                                        <a class="nav-link" href="{{ route('logout') }}"onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Wyloguj</a>
+                                    @endif
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
                                 </div>
                             </div>
                          </nav>
@@ -53,6 +65,7 @@
 
         <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
         <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+        <script src="{{ asset('js/app.js') }}" defer></script>
         <script type="text/javascript" src="js/functions.js"></script>
     </body>
 </html>

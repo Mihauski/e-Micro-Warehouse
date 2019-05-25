@@ -1,80 +1,65 @@
+@php
+    use Illuminate\Http\Request;
+    //Importy dla modeli poszczególnych tabel
+    use App\alarm;
+    use App\stock;
+
+    $alarms = stock::where('alarm',1)->count();
+@endphp
+
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html>
+    <head>
+        <title>@yield('title', 'eMicro Warehouse')</title>
+        <meta name="description" content="Programista aplikacji webowych, student, pasjonat informatyki. Chcesz dowiedzieć się czegoś więcej o mnie i moich projektach? Zapraszam!">
+        <meta name="keywords" content="HTML,CSS,JavaScript,PHP,web,design,michalski,bootstrap,purecss">
+        <meta name="author" content="Michał Michalski">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-</head>
+        <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
+        <link type="text/css" rel="stylesheet" href="css/style.css"/>
+        <link rel="stylesheet" href="css/fontawesome.css"/>
+    </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+    <div class="row topmenu sticky-top">
+                <div class="col sticky-top">
+                        <nav class="navbar navbar-expand-lg sticky-top"> 
+                            <a class="navbar-brand" href="/">Logo :: eMicro Warehouse</a>                 
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon">toggle</span>
+                            </button>
+                            <div class="collapse navbar-collapse justify-content-end nav-pills" id="navbarMenu"> 
+                                <div class="navbar-nav">
+                                    <a class="nav-link @if ($_SERVER['REQUEST_URI'] === '/') active @endif" href="/">Panel Kontrolny</a>
+                                    <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/stock') active @endif" href="/stock">Magazyn</a>
+                                    <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/reminders') active @endif" href="/reminders">Alarmy @if(isset($alarms) && ($alarms > 0))<sup class="menualarm">{{$alarms}}</sup>@endif</a>
+                                    <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/users') active @endif" href="/users">Użytkownicy</a>
+                                    <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/myaccount') active @endif" href="/myaccount">Moje Konto</a>
+                                    @guest
+                                    <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/login') active @endif" href="/login">Zaloguj</a>
+                                    @endguest
+                                    @if(Auth::check())
+                                    <a class="nav-link" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        Wyloguj
                                     </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
+                                    @endif
                                 </div>
-                            </li>
-                        @endguest
-                    </ul>
+                            </div>
+                         </nav>
                 </div>
             </div>
-        </nav>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+            <div class="row content">
+                <div class="col logindiv">
+                    @yield('content')
+                </div>
+            </div>
     </div>
+    <script src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>
