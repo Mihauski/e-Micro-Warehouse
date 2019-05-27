@@ -89,15 +89,26 @@
                   </div>
     <div class="table-container">
     <form method="POST" action="/stock/search" autocomplete="off">
-      <span>Szukaj: </span>
-      <select name="searchcon" required>
-        <option value="nazwa">Nazwy</option>
-        <option value="typ">Typu</option>
-        <option value="ilosc">Ilości</option>
-        <option value="jednostka">Jednostki</option>
-        <option value="alarm">Alarmu</option>
-      </select>
-      <input type="text" name="searchval" placeholder="Wpisz słowo kluczowe..." required>
+    <div class="form-row">
+      <div>
+        <span style="line-height:35px;">Szukaj: </span>
+      </div>
+      <div class="col-1.5">
+        <select name="searchcon" class="form-control" required>
+          <option value="nazwa">Nazwy</option>
+          <option value="typ">Typu</option>
+          <option value="ilosc">Ilości</option>
+          <option value="jednostka">Jednostki</option>
+          <option value="alarm">Alarmu</option>
+        </select>
+      </div>
+      <div class="col-3">
+        <input type="text" name="searchval" placeholder="Wpisz słowo kluczowe..." class="form-control" required>
+      </div>
+      <div>
+        <button type="submit" class="btn btn-outline-info">Szukaj</button>
+      </div>
+    </div>
     </form>
       @include('viewStock-table')
     </div>
