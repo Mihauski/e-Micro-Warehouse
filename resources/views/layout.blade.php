@@ -36,14 +36,14 @@
                             <div class="collapse navbar-collapse justify-content-end nav-pills" id="navbarMenu"> 
                                 <div class="navbar-nav">
                                     @if(Auth::check())
-                                        <a class="nav-link @if ($_SERVER['REQUEST_URI'] === '/panel') active @endif" href="/panel">Panel Kontrolny</a>
-                                        <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/stock') active @endif" href="/stock">Magazyn</a>
-                                        <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/reminders') active @endif" href="/reminders">Alarmy @if(isset($alarms) && ($alarms > 0) && (Auth::check()))<sup class="menualarm">{{$alarms}}</sup>@endif</a>
-                                        <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/users') active @endif" href="/users">Użytkownicy</a>
-                                        <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/myaccount') active @endif" href="/myaccount">Moje Konto</a>
+                                        <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'panel')) active @endif" href="/panel">Panel Kontrolny</a>
+                                        <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'stock')) active @endif" href="/stock">Magazyn</a>
+                                        <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'reminders')) active @endif" href="/reminders">Alarmy @if(isset($alarms) && ($alarms > 0) && (Auth::check()))<sup class="menualarm">{{$alarms}}</sup>@endif</a>
+                                        <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'users')) active @endif" href="/users">Użytkownicy</a>
+                                        <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'myaccount')) active @endif" href="/myaccount">Moje Konto</a>
                                     @endif
                                     @guest
-                                    <a class="nav-link @if ($_SERVER['REQUEST_URI'] == '/login') active @endif" href="/login">Zaloguj</a>
+                                    <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'login')) active @endif" href="/login">Zaloguj</a>
                                     @endguest
                                     @if(Auth::check())
                                         <a class="nav-link" href="{{ route('logout') }}"onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Wyloguj</a>

@@ -2,18 +2,24 @@
               <thead class="thead-light">
                 <tr>
                   <th>Lp.</th>
-                  <th>Produkt</th>
-                  <th>Typ</th>
-                  <th>Ilość</th>
-                  <th>Jednostka</th>
+                  <th>@sortablelink('nazwa', 'Produkt')</th>
+                  <th>@sortablelink('typ', 'Typ')</th>
+                  <th>@sortablelink('ilosc', 'Ilość')</th>
+                  <th>@sortablelink('jednostka', 'Jednostka')</th>
                   <th>Uwagi</th>
-                  <th>Alarm</th>
+                  <th>@sortablelink('alarm', 'Alarm')</th>
                   <th>Akcje</th>
                 </tr>
               </thead>
               <tbody>
                     @php
-                      $counter = 1;
+                      if(empty($_GET['counter']) || ($_GET['counter'] == 1) || !isset($_GET['page'])) {
+                        $counter = 1;
+                      } else if(isset($_GET['page'])) {
+                        //wyliczenie prawidłowego parametru lp. w tabeli
+                        $counter = ($paginate) * ($_GET['page'] - 1) +1;
+                        print($counter);
+                      }
                     @endphp
                   @foreach($stock as $item)
                 <tr @if ($item->alarm == true) class="alarm" @endif>
@@ -70,7 +76,7 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text modalfield">Ilość</div>
                       </div>
-                      <input type="number" name="ilosc" value="{{ $item->ilosc }}" class="form-control" required>
+                      <input type="number" name="ilosc" value="{{ $item->ilosc }}" class="form-control" min="0" required>
                     </div>
 
                     <label class="sr-only" for="nazwa">Jednostka</label>
@@ -113,6 +119,10 @@
                       </div>
                     </div>
                     <input type="hidden" name="action" value="edit"/>
+                    @if(isset($_GET['page']) && isset($_GET['counter']))
+                      <input type="hidden" name="page" value="{{ $_GET['page'] }}" />
+                      <input type="hidden" name="counter" value="{{ $_GET['counter'] }}"/>
+                    @endif
                     <input type="hidden" name="csrf" value="{{ csrf_token() }}"/>
 
                       <input type="submit" value="Zaktualizuj" class="btn btn-outline-success float-right" name="submit">
@@ -146,6 +156,10 @@
                         <input type="text" name="nazwa" value="{{ $item->nazwa }}" class="form-control" disabled readonly>
                       </div>
                       <p><strong>UWAGA:</strong> Tej operacji nie da się cofnąć!</p>
+                      @if(isset($_GET['page']) && isset($_GET['counter']))
+                      <input type="hidden" name="page" value="{{ $_GET['page'] }}" />
+                      <input type="hidden" name="counter" value="{{ $_GET['counter'] }}"/>
+                    @endif
                     <input type="hidden" name="csrf" value="{{ csrf_token() }}"/>
 
                       <input type="submit" value="Usuń" class="btn btn-outline-danger float-right" name="submit"/>
@@ -156,3 +170,4 @@
                 @endforeach
               </tbody>
             </table>
+            {!! $stock->appends(\Request::except('page'))->appends('counter', $counter)->render() !!}

@@ -30,10 +30,13 @@ class PageController extends Controller
     public function stock() {
         //pobieramy wszystkie obiekty z bazy
         if (Auth::check()) {
-            $stock = stock::all();
+            //$stock = stock::all();
+            //Od teraz używamy analogicznego pobierania ale za pomocą klasy Sortable z paginacją co X wpisów
+            $paginate = 5;
+            $stock = stock::sortable()->orderBy('nazwa', 'asc')->paginate($paginate);
         }
         //compact() przekazuje nam dane w formie uproszczonej i bardziej czytelnej
-        return view('viewStock', compact('stock'));
+        return view('viewStock', compact('stock', 'paginate'));
     }
 
     public function refreshStock() {

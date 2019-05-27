@@ -49,7 +49,7 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text modalfield">Ilość</div>
                       </div>
-                      <input type="number" name="ilosc" placeholder="Ilość jednostek produktu, np. &quot;25&quot;" class="form-control" required>
+                      <input type="number" name="ilosc" placeholder="Ilość jednostek produktu, np. &quot;25&quot;" class="form-control" min="0" required>
                     </div>
 
                     <label class="sr-only" for="nazwa">Jednostka</label>
@@ -76,7 +76,11 @@
                       </div>
                       <textarea class="form-control" id="uwagi" name="uwagi" rows="3" placeholder="Dowolne uwagi (notatki) dotyczące produktu."></textarea>
                     </div>
-
+                    
+                    @if(isset($_GET['page']) && isset($_GET['counter']))
+                      <input type="hidden" name="page" value="{{ $_GET['page'] }}" />
+                      <input type="hidden" name="counter" value="{{ $_GET['counter'] }}"/>
+                    @endif
                     <input type="hidden" name="csrf" value="{{ csrf_token() }}"/>
 
                       <input type="submit" value="Dodaj produkt" class="btn btn-outline-success float-right" name="submit">

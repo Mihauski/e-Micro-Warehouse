@@ -18,6 +18,8 @@ class stockDBOps extends Controller
         $jednostka = $request->jednostka;
         $alarm = $request->alarm;
         $uwagi = $request->uwagi;
+        $page = $request->page;
+        $counter = $request->counter;
 
         $stock = \App\stock::find($id);
         $alarms = \App\alarm::where('prod_id', $id)->get();
@@ -41,10 +43,18 @@ class stockDBOps extends Controller
         
         if($stock->save() == true) {
             //return json_encode("true");
-            return redirect('/stock')->with('statustext', 'Dane zaktualizowane pomyślnie!')->with('status',true);
+            if(isset($page)) {
+                return redirect('/stock?page='.$page.'&counter='.$counter)->with('statustext', 'Dane zaktualizowane pomyślnie!')->with('status', true);
+            } else {
+                return redirect('/stock')->with('statustext', 'Dane zaktualizowane pomyślnie!')->with('status',true);
+            }
         } else {
+            if(isset($page)) {
+                return redirect('/stock?page='.$page.'&counter='.$counter)->with('statustext', 'Aktualizacja nie powiodła się!')->with('status', false);
+            } else {
             //return json_encode("false");
-            return redirect('/stock')->with('statustext', 'Aktualizacja nie powiodła się!')->with('status',false);
+                return redirect('/stock')->with('statustext', 'Aktualizacja nie powiodła się!')->with('status',false);
+            }
         }
     }
 
@@ -55,6 +65,8 @@ class stockDBOps extends Controller
         $jednostka = $request->jednostka;
         $alarm = 0;
         $uwagi = $request->uwagi ?? null;
+        $page = $request->page;
+        $counter = $request->counter;
 
         $stock = new \App\stock;
         $stock->nazwa = $nazwa;
@@ -66,22 +78,41 @@ class stockDBOps extends Controller
 
         if($nazwa != null && $typ != null && $ilosc != null && ($jednostka != null && strlen($jednostka) <= 3)) {
             if($stock->save()) {
-                return redirect('/stock')->with('statustext', 'Produkt dodany pomyślnie!')->with('status', true);
+                if(isset($page)) {
+                    return redirect('/stock?page='.$page.'&counter='.$counter)->with('statustext', 'Produkt dodany pomyślnie!')->with('status', true);
+                } else {
+                    return redirect('/stock')->with('statustext', 'Produkt dodany pomyślnie!')->with('status', true);
+                }
             }
-        } else
+        } else {
+            if(isset($page)) {
+                return redirect('/stock?page='.$page.'&counter='.$counter)->with('statustext', 'Nie udało się dodać produktu.')->with('status', false);
+            } else {
                 return redirect('/stock')->with('statustext', 'Nie udało się dodać produktu.')->with('status',false);
+            }
+        }
     }
 
     public function delete(Request $request) {
         $id = $request->id;
         $stock = \App\stock::find($id);
+        $page = $request->page;
+        $counter = $request->counter;
 
         if($stock->count() > 0) {
             if(($stock->delete() == true)) {
-                return redirect('/stock')->with('statustext', 'Produkt usunięty!')->with('status', true);
+                if(isset($page)) {
+                    return redirect('/stock?page='.$page.'&counter='.$counter)->with('statustext', 'Produkt usunięty!')->with('status', true);
+                } else {
+                    return redirect('/stock')->with('statustext', 'Produkt usunięty!')->with('status', true);
+                }
             }
         } else {
-            return redirect('/stock')->with('statustext', 'Usuwanie produktu nie powiodło się.')->with('status',false);
+            if(isset($page)) {
+                return redirect('/stock?page='.$page.'&counter='.$counter)->with('statustext', 'Usuwanie produktu nie powiodło się.')->with('status', false);
+            } else {
+                return redirect('/stock')->with('statustext', 'Usuwanie produktu nie powiodło się.')->with('status',false);
+            }
         }
     }
 }
