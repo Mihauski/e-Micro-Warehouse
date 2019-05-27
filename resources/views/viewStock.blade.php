@@ -88,6 +88,17 @@
                   </div>
                   </div>
     <div class="table-container">
+    <form method="POST" action="/stock/search" autocomplete="off">
+      <span>Szukaj: </span>
+      <select name="searchcon" required>
+        <option value="nazwa">Nazwy</option>
+        <option value="typ">Typu</option>
+        <option value="ilosc">Ilości</option>
+        <option value="jednostka">Jednostki</option>
+        <option value="alarm">Alarmu</option>
+      </select>
+      <input type="text" name="searchval" placeholder="Wpisz słowo kluczowe..." required>
+    </form>
       @include('viewStock-table')
     </div>
 
