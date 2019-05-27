@@ -18,7 +18,6 @@
                       } else if(isset($_GET['page'])) {
                         //wyliczenie prawidłowego parametru lp. w tabeli
                         $counter = ($paginate) * ($_GET['page'] - 1) +1;
-                        print($counter);
                       }
                     @endphp
                   @foreach($stock as $item)
