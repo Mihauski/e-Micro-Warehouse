@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Input;
 
 use App\stock;
 use App\alarm;
@@ -44,9 +45,9 @@ class stockDBOps extends Controller
         if($stock->save() == true) {
             //return json_encode("true");
             if(isset($page)) {
-                return back()->with('statustext', 'Dane zaktualizowane pomyślnie!')->with('status', true);
+                return back()->with('statustext', 'Dane zaktualizowane pomyślnie!')->with('status', true)->withInput();
             } else {
-                return back()->with('statustext', 'Dane zaktualizowane pomyślnie!')->with('status',true);
+                return back()->with('statustext', 'Dane zaktualizowane pomyślnie!')->with('status',true)->withInput();
             }
         } else {
             if(isset($page)) {
@@ -134,6 +135,10 @@ class stockDBOps extends Controller
             } else {
                 return view('viewStock', compact('stock','val','con','paginate'))->with('statustext', 'Nie znaleziono produktów spełniających kryteria.')->with('status',false);
             }
-        }       
+        } else {
+            if(!isset($paginate)) $paginate = 5;
+            $stock = stock::sortable()->orderBy('nazwa', 'asc')->paginate($paginate);
+            return view('viewStock', compact('paginate','stock'));
+        }      
     }
 }

@@ -30,7 +30,8 @@
                   <div class="modal-content">
                   <span class="closeadd">&times; <font size="5pt">Zamknij</font></span>
 
-                  <form action="/stock/add" method="post" autocomplete="off">
+                  <form action="{{ url('stock/add') }}" method="post" autocomplete="off">
+                  <input type="text" name="paginate" value="{{ $paginate }}" hidden/>
                     @csrf
                     <label class="sr-only" for="nazwa">Nazwa</label>
                     <div class="input-group mb-2 mr-sm-2">
@@ -92,7 +93,7 @@
                   </div>
                   </div>
     <div class="table-container">
-    <form method="POST" action="/stock/search" autocomplete="off">
+    <form method="POST" action="{{ url('stock/search') }}" autocomplete="off">
     @csrf
     <div class="form-row">
       <div>
@@ -114,7 +115,7 @@
       <div>
         <button type="submit" class="btn btn-outline-info">Szukaj</button>
         @if(isset($val))
-          <span class="cancel"><a href="/stock"><i class="far fa-times-circle"></i> Zamknij wyszukiwanie</a></span>
+          <span class="cancel"><a href="{{ url('stock') }}"><i class="far fa-times-circle"></i> Zamknij wyszukiwanie</a></span>
         @endif
       </div>
     </div>

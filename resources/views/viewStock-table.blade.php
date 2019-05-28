@@ -44,8 +44,9 @@
                   <div class="modal-content">
                   <span class="close">&times; <font size="5pt">Zamknij</font></span>
 
-                  <form action="/stock/edit" method="post" autocomplete="off">
+                  <form action="{{ url('stock/edit')}}" method="post" autocomplete="off">
                     @csrf
+                    <input type="text" name="paginate" value="{{ $paginate }}" hidden/>
                     <label class="sr-only" for="id">ID</label>
                       <div class="input-group mb-2 mr-sm-2">
                         <div class="input-group-prepend">
@@ -136,7 +137,8 @@
                   <div class="modal-content">
                   <span class="closedel">&times; <font size="5pt">Zamknij</font></span>
 
-                  <form action="/stock/delete" method="post" autocomplete="off">
+                  <form action="{{ url('stock/delete') }}" method="post" autocomplete="off">
+                  <input type="text" name="paginate" value="{{ $paginate }}" hidden/>
                     @csrf
                     <h3>Czy chcesz usunąć ten produkt?</h3>
                     <label class="sr-only" for="id">ID</label>

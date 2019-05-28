@@ -20,30 +20,30 @@
         <meta charset="UTF-8">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css"/>
-        <link type="text/css" rel="stylesheet" href="/css/style.css"/>
-        <link rel="stylesheet" href="/css/fontawesome.css"/>
+        <link type="text/css" rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"/>
+        <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}"/>
     </head>
     <body>
         <div class="container-fluid">
             <div class="row topmenu sticky-top">
                 <div class="col sticky-top">
                         <nav class="navbar navbar-expand-lg sticky-top"> 
-                            <a class="navbar-brand" href="/">Logo :: eMicro Warehouse</a>                 
+                            <a class="navbar-brand" href="{{ url('/') }}">Logo :: eMicro Warehouse</a>                 
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon">toggle</span>
                             </button>
                             <div class="collapse navbar-collapse justify-content-end nav-pills" id="navbarMenu"> 
                                 <div class="navbar-nav">
                                     @if(Auth::check())
-                                        <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'panel')) active @endif" href="/panel">Panel Kontrolny</a>
-                                        <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'stock')) active @endif" href="/stock">Magazyn</a>
-                                        <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'reminders')) active @endif" href="/reminders">Alarmy @if(isset($alarms) && ($alarms > 0) && (Auth::check()))<sup class="menualarm">{{$alarms}}</sup>@endif</a>
-                                        <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'users')) active @endif" href="/users">Użytkownicy</a>
-                                        <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'myaccount')) active @endif" href="/myaccount">Moje Konto</a>
+                                        <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'panel')) active @endif" href="{{ url('panel') }}">Panel Kontrolny</a>
+                                        <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'stock')) active @endif" href="{{ url('stock') }}">Magazyn</a>
+                                        <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'reminders')) active @endif" href="{{ url('reminders') }}">Alarmy @if(isset($alarms) && ($alarms > 0) && (Auth::check()))<sup class="menualarm">{{$alarms}}</sup>@endif</a>
+                                        <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'users')) active @endif" href="{{ url('users') }}">Użytkownicy</a>
+                                        <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'myaccount')) active @endif" href="{{ url('myaccount')}}">Moje Konto</a>
                                     @endif
                                     @guest
-                                    <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'login')) active @endif" href="/login">Zaloguj</a>
+                                    <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'login')) active @endif" href="{{ url('login') }}">Zaloguj</a>
                                     @endguest
                                     @if(Auth::check())
                                         <a class="nav-link" href="{{ route('logout') }}"onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Wyloguj</a>
@@ -63,9 +63,9 @@
             </div>
         </div>
 
-        <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
-        <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('js/app.js') }}" defer></script>
-        <script type="text/javascript" src="/js/functions.js"></script>
+        <script type="text/javascript" src="{{ asset('js/functions.js') }}"></script>
     </body>
 </html>

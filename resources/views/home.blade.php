@@ -9,7 +9,7 @@
 
                 <div class="card-body">
                     @if(!Auth::check())
-                        <form method="POST" action="{{ route('login') }}">
+                        <form method="POST" action="{{ url('login') }}">
                             @csrf
 
                             <div class="form-group row">
