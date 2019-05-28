@@ -23,7 +23,7 @@ return [
     'welcome' => [
         'templateTitle' => 'Witaj!',
         'title'   => 'Instalator eMicro Warehouse',
-        'message' => 'Witaj! Ten instalator pomoże Ci zainstalować aplikację eMicro Warehouse. Przygotuj dane do bazy danych, wymyśl tytuł jak ma nosić Twoja strona i pomyśl o danych konta administratora, na które chcesz się zalogować po instalacji. Do dzieła!',
+        'message' => 'Witaj! Ten instalator pomoże Ci zainstalować aplikację eMicro Warehouse. Przygotuj dane do bazy danych, wymyśl tytuł, jaki ma nosić Twoja strona i pomyśl o danych konta administratora, na które chcesz się zalogować po instalacji. Do dzieła!',
         'next'    => 'Sprawdź wymagania',
     ],
 
