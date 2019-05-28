@@ -73,7 +73,7 @@ return [
             'form' => [
                 'name_required' => 'Nazwa środowiska jest wymagana.',
                 'app_name_label' => 'Nazwa aplikacji',
-                'app_name_placeholder' => 'Nazwa aplikacji',
+                'app_name_placeholder' => 'Np. "moja fajna strona"',
                 'app_environment_label' => 'Środowisko aplikacji',
                 'app_environment_label_local' => 'Serwer lokalny (zalecane)',
                 'app_environment_label_developement' => 'Development',
