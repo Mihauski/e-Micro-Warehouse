@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         //Additional packages
         Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
+        RachidLaasri\LaravelInstaller\Providers\LaravelInstallerServiceProvider::class,
 
     ],
 
