@@ -17,7 +17,7 @@ class CreateAlarmsTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->integer('prod_id');
-            $table->integer('prog');
+            $table->integer('prog')->nullable();
             $table->dateTime('deadline')->nullable();
         });
     }

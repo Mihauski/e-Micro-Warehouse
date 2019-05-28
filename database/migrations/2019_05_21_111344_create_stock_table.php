@@ -20,7 +20,7 @@ class CreateStockTable extends Migration
             $table->string('typ');
             $table->integer('ilosc');
             $table->char('jednostka',3);
-            $table->boolean('alarm');
+            $table->boolean('alarm')->default(0)->nullable();
             $table->text('uwagi')->nullable();
         });
     }

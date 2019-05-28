@@ -12,7 +12,7 @@
 */
 
 //routing przerzucony na PageController
-Route::get('/', 'PageController@home');
+Route::get('/', 'PageController@home')->name('main');
 Route::get('/panel', 'PageController@panel')->middleware('auth');
 Route::get('/login', 'PageController@login');
 Route::get('/login/lostpass', 'PageController@lostpass');
