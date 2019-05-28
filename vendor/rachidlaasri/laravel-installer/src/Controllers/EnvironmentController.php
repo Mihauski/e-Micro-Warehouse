@@ -9,6 +9,8 @@ use RachidLaasri\LaravelInstaller\Helpers\EnvironmentManager;
 use RachidLaasri\LaravelInstaller\Events\EnvironmentSaved;
 use Validator;
 use Illuminate\Validation\Rule;
+use App\User;
+use Illuminate\Support\Facades\Hash;
 
 class EnvironmentController extends Controller
 {
@@ -101,7 +103,20 @@ class EnvironmentController extends Controller
 
         event(new EnvironmentSaved($request));
 
+        $name = $request->username;
+        $email = $request->useremail;
+        $password =  Hash::make($request->userpass);
+        $role = 'admin';$name = $request->username;
+
+       
+
         return $redirect->route('LaravelInstaller::database')
-                        ->with(['results' => $results]);
+                        ->with([
+                            'results' => $results,
+                            'name' => $name,
+                            'email' => $email,
+                            'password' => $password,
+                            'role' => $role
+                        ]);
     }
 }

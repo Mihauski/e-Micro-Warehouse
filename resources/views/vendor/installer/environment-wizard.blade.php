@@ -219,6 +219,27 @@
                     @endif
                 </div>
 
+                <div class="form-group {{ $errors->has('database_password') ? ' has-error ' : '' }}">
+                    <label for="username">
+                        {{ trans('installer_messages.environment.wizard.form.username') }}
+                    </label>
+                    <input type="text" name="username" id="username" value="" placeholder="{{ trans('installer_messages.environment.wizard.form.username_placeholder') }}" />
+                </div>
+
+                <div class="form-group {{ $errors->has('database_password') ? ' has-error ' : '' }}">
+                    <label for="userpass">
+                        {{ trans('installer_messages.environment.wizard.form.userpass') }}
+                    </label>
+                    <input type="password" name="userpass" id="userpass" value="" placeholder="{{ trans('installer_messages.environment.wizard.form.userpass_placeholder') }}" />
+                </div>
+
+                <div class="form-group {{ $errors->has('database_password') ? ' has-error ' : '' }}">
+                    <label for="useremail">
+                        {{ trans('installer_messages.environment.wizard.form.useremail') }}
+                    </label>
+                    <input type="text" name="useremail" id="useremail" value="" placeholder="{{ trans('installer_messages.environment.wizard.form.useremail_placeholder') }}" />
+                </div>
+
                 <div class="buttons">
                     <button class="button" onclick="showApplicationSettings();return false">
                         {{ trans('installer_messages.environment.wizard.form.buttons.setup_application') }}
