@@ -17,7 +17,7 @@ Route::get('/panel', 'PageController@panel')->middleware('auth');
 Route::get('/login', 'PageController@login');
 Route::get('/login/lostpass', 'PageController@lostpass');
 Route::get('/stock', 'PageController@stock')->middleware('auth');
-Route::get('/stock/search', 'PageController@stocksearch')->middleware('auth');
+Route::match(array('GET', 'POST'), '/stock/search', 'stockDBOps@search')->middleware('auth');
 Route::post('/stock/add', 'stockDBOps@add')->middleware('auth');
 Route::post('/stock/edit', 'stockDBOps@edit')->middleware('auth');
 Route::post('/stock/delete', 'stockDBOps@delete')->middleware('auth');

@@ -223,3 +223,13 @@ button.openmodaladd {
   .logindiv {
     margin-top:50px;
   }
+
+span.cancel, span.cancel a {
+  color:grey;
+  padding-left:10px;
+}
+
+span.cancel:hover, span.cancel a:hover {
+  color:black;
+  text-decoration:underline;
+}

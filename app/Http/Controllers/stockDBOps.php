@@ -44,16 +44,16 @@ class stockDBOps extends Controller
         if($stock->save() == true) {
             //return json_encode("true");
             if(isset($page)) {
-                return redirect('/stock?page='.$page.'&counter='.$counter)->with('statustext', 'Dane zaktualizowane pomyślnie!')->with('status', true);
+                return back()->with('statustext', 'Dane zaktualizowane pomyślnie!')->with('status', true);
             } else {
-                return redirect('/stock')->with('statustext', 'Dane zaktualizowane pomyślnie!')->with('status',true);
+                return back()->with('statustext', 'Dane zaktualizowane pomyślnie!')->with('status',true);
             }
         } else {
             if(isset($page)) {
-                return redirect('/stock?page='.$page.'&counter='.$counter)->with('statustext', 'Aktualizacja nie powiodła się!')->with('status', false);
+                return back()->with('statustext', 'Aktualizacja nie powiodła się!')->with('status', false);
             } else {
             //return json_encode("false");
-                return redirect('/stock')->with('statustext', 'Aktualizacja nie powiodła się!')->with('status',false);
+                return back()->with('statustext', 'Aktualizacja nie powiodła się!')->with('status',false);
             }
         }
     }
@@ -79,16 +79,16 @@ class stockDBOps extends Controller
         if($nazwa != null && $typ != null && $ilosc != null && ($jednostka != null && strlen($jednostka) <= 3)) {
             if($stock->save()) {
                 if(isset($page)) {
-                    return redirect('/stock?page='.$page.'&counter='.$counter)->with('statustext', 'Produkt dodany pomyślnie!')->with('status', true);
+                    return back()->with('statustext', 'Produkt dodany pomyślnie!')->with('status', true);
                 } else {
-                    return redirect('/stock')->with('statustext', 'Produkt dodany pomyślnie!')->with('status', true);
+                    return back()->with('statustext', 'Produkt dodany pomyślnie!')->with('status', true);
                 }
             }
         } else {
             if(isset($page)) {
-                return redirect('/stock?page='.$page.'&counter='.$counter)->with('statustext', 'Nie udało się dodać produktu.')->with('status', false);
+                return back()->with('statustext', 'Nie udało się dodać produktu.')->with('status', false);
             } else {
-                return redirect('/stock')->with('statustext', 'Nie udało się dodać produktu.')->with('status',false);
+                return back()->with('statustext', 'Nie udało się dodać produktu.')->with('status',false);
             }
         }
     }
@@ -102,17 +102,38 @@ class stockDBOps extends Controller
         if($stock->count() > 0) {
             if(($stock->delete() == true)) {
                 if(isset($page)) {
-                    return redirect('/stock?page='.$page.'&counter='.$counter)->with('statustext', 'Produkt usunięty!')->with('status', true);
+                    return back()->with('statustext', 'Produkt usunięty!')->with('status', true);
                 } else {
-                    return redirect('/stock')->with('statustext', 'Produkt usunięty!')->with('status', true);
+                    return back()->with('statustext', 'Produkt usunięty!')->with('status', true);
                 }
             }
         } else {
             if(isset($page)) {
-                return redirect('/stock?page='.$page.'&counter='.$counter)->with('statustext', 'Usuwanie produktu nie powiodło się.')->with('status', false);
+                return back()->with('statustext', 'Usuwanie produktu nie powiodło się.')->with('status', false);
             } else {
-                return redirect('/stock')->with('statustext', 'Usuwanie produktu nie powiodło się.')->with('status',false);
+                return back()->with('statustext', 'Usuwanie produktu nie powiodło się.')->with('status',false);
             }
         }
+    }
+
+    public function search(Request $request) {
+        $val = $request->searchval;
+        $con = $request->searchcon;
+        $paginate = $request->paginate;
+        if (in_array($con, ['nazwa','typ','ilosc','jednostka','alarm'], true ) ) {
+            if(($con == 'alarm')) {
+                if(strtolower($val) == 'tak') {$val = 1;} else if(strtolower($val) == 'nie') {$val = 0;};
+            }
+            $count = stock::Query()->where($con, 'LIKE', "%{$val}%")->count();
+            $stock = stock::sortable()
+            ->where($con, 'LIKE', "%{$val}%") 
+            ->paginate($paginate);
+
+            if($stock->count() > 0) {
+                return view('viewStock', compact('stock','val','con','paginate'))->with('statustext', 'Znaleziono '.$count.' produktów.')->with('status',true);
+            } else {
+                return view('viewStock', compact('stock','val','con','paginate'))->with('statustext', 'Nie znaleziono produktów spełniających kryteria.')->with('status',false);
+            }
+        }       
     }
 }

@@ -8,7 +8,7 @@
   });
 
 
-  //funkcja rozwijanego contentu w viewStock
+  //funkcja rozwijanego contentu w "uwagach" w viewStock
     var coll = document.getElementsByClassName("collapsible");
     var i;
 
@@ -26,12 +26,16 @@
     });
   }
 
+//Zanikanie messageboxa
   $(document).ready(function() {
-    $('.alert').delay(5000).fadeOut(1000);
+    $('.alert').delay(10000).fadeOut(1000);
   });
   
+
+// -- modale (wyskakujące okienka) --
+
+//modal dla edycji
   $(document).ready(function() {
-  //modal Window
   //catch all modals
   var modals = document.getElementsByClassName('modal');
   // Get the buttons that opens the modal
@@ -56,6 +60,7 @@
     }
 });
 
+//modal dla usuwania
 $(document).ready(function() {
   //modal Window
   //catch all modals
@@ -82,6 +87,7 @@ $(document).ready(function() {
     }
 });
 
+//modal dla dodawania produktu
 $(document).ready(function() {
   //modal Window
   //catch all modals
@@ -107,6 +113,10 @@ $(document).ready(function() {
       }
     }
 });
+
+// -- koniec modali --
+
+
 
 /*  //AJAX FORM CODE
     $('form').submit(function(event) {

@@ -9,13 +9,17 @@
 
     <h2>Stany magazynowe <small class="text-muted">na dzień {{ date('d-m-Y') }}</small></h2>
     <!-- mamy przekazany parametr $table, więc chcemy go teraz wypisać -->
-    @if(!(session()->get('status') === null))
-      <div class="alert @if(session()->get('status') == true) alert-success @elseif(session()->get('status') == false) alert-danger @endif">
+    @if((!(session()->get('status') === null)) || isset($status))
+      <div class="alert @if((session()->get('status') == true) || $status == true) alert-success @elseif((session()->get('status') == false) || $status == false) alert-danger @endif">
         <div class="glyphicon">
-        @if(session()->get('status') == true) <i class="fas fa-check-circle"></i> @elseif(session()->get('status') == false) <i class="fas fa-times-circle"></i> @endif
+        @if((session()->get('status') == true) || $status == true) <i class="fas fa-check-circle"></i> @elseif((session()->get('status') == false) || $status=false) <i class="fas fa-times-circle"></i> @endif
         </div>
         <div>
+        @if((!(session()->get('status') === null)))
           {{ session()->get('statustext') }}
+        @elseif(isset($statustext))
+          {{ $statustext }}
+        @endif
         </div>
       </div>
     @endif
@@ -89,24 +93,29 @@
                   </div>
     <div class="table-container">
     <form method="POST" action="/stock/search" autocomplete="off">
+    @csrf
     <div class="form-row">
       <div>
         <span style="line-height:35px;">Szukaj: </span>
       </div>
       <div class="col-1.5">
         <select name="searchcon" class="form-control" required>
-          <option value="nazwa">Nazwy</option>
-          <option value="typ">Typu</option>
-          <option value="ilosc">Ilości</option>
-          <option value="jednostka">Jednostki</option>
-          <option value="alarm">Alarmu</option>
+          <option value="nazwa" @if(($con ?? null) == 'nazwa') selected @endif>Nazwy</option>
+          <option value="typ" @if(($con ?? null) == 'typ') selected @endif>Typu</option>
+          <option value="ilosc" @if(($con ?? null) == 'ilosc') selected @endif>Ilości</option>
+          <option value="jednostka" @if(($con ?? null) == 'jednostka') selected @endif>Jednostki</option>
+          <option value="alarm" @if(($con ?? null) == 'alarm') selected @endif>Alarmu</option>
         </select>
       </div>
       <div class="col-3">
-        <input type="text" name="searchval" placeholder="Wpisz słowo kluczowe..." class="form-control" required>
+        <input type="text" name="searchval" placeholder="Wpisz słowo kluczowe..." @if(isset($val)) value="{{ $val }}" @endif class="form-control" required>
+        <input type="text" name="paginate" value="{{ $paginate }}" hidden/>
       </div>
       <div>
         <button type="submit" class="btn btn-outline-info">Szukaj</button>
+        @if(isset($val))
+          <span class="cancel"><a href="/stock"><i class="far fa-times-circle"></i> Zamknij wyszukiwanie</a></span>
+        @endif
       </div>
     </div>
     </form>
