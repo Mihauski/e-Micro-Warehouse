@@ -34,9 +34,10 @@ class PageController extends Controller
             //Od teraz używamy analogicznego pobierania ale za pomocą klasy Sortable z paginacją co X wpisów
             $paginate = 10;
             $stock = stock::sortable()->orderBy('nazwa', 'asc')->paginate($paginate);
+            $alarm = alarm::all();
         }
         //compact() przekazuje nam dane w formie uproszczonej i bardziej czytelnej
-        return view('viewStock', compact('stock', 'paginate'));
+        return view('viewStock', compact('stock', 'alarm', 'paginate'));
     }
 
     public function refreshStock() {

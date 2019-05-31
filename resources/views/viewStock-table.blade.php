@@ -124,7 +124,7 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text modalfield">Próg (ilość)</div>
                       </div>
-                      <input type="number" name="prog" placeholder="np. &quot;25&quot;" class="form-control">
+                      <input type="number" name="prog" value="{{ \App\alarm::where('prod_id', $item->id)->first()->prog ?? '' }}" placeholder="np. &quot;25&quot;" class="form-control">
                     </div>
 
                     <label class="sr-only" for="nazwa">Deadline</label>
@@ -132,7 +132,10 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text modalfield">Deadline</div>
                       </div>
-                      <input type="datetime-local" name="typ"  class="form-control">
+                      @php
+                      $date = \App\alarm::where('prod_id', $item->id)->first()->deadline ?? '';
+                      @endphp
+                      <input type="datetime-local" name="deadline" @if($date) value="{{ date('Y-m-d\TH:i', strtotime($date)) }}" @endif  class="form-control">
                     </div>
 
                     <input type="hidden" name="action" value="edit"/>

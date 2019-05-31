@@ -23,14 +23,23 @@ class stockDBOps extends Controller
         $counter = $request->counter;
 
         $stock = \App\stock::find($id);
-        $alarms = \App\alarm::where('prod_id', $id)->get();
+        $alarms = \App\alarm::where('prod_id', $id)->first();
 
-        if(!$alarms->isEmpty() && !empty($alarms->prog)) {
-            if($stock->ilosc <= $alarms->prog) {
+            $prod_id = $id;
+            $prog = $request->prog;
+            $deadline = $request->deadline;
+
+        if(!$alarms && !empty($alarms->prog)) {
+            if(($stock->ilosc <= $alarms->prog) || ($ilosc <= $alarms->prog)) {
                 $alarm = 1;
             }
-            if($stock->ilosc > $alarms->prog) {
+            if(($stock->ilosc > $alarms->prog) || ($ilosc > $alarms->prog)) {
                 $alarm = 0;
+            }
+        }
+        if(!$alarms && !empty($alarms->deadline)) {
+            if(date('Y-m-d\TH:i:sP') >= $alarms->deadline) {
+                $alarm = 1;
             }
         }
 
@@ -44,6 +53,45 @@ class stockDBOps extends Controller
         
         if($stock->save() == true) {
             //return json_encode("true");
+            if($alarms && $alarm == 1) {
+                $newalarm = new \App\alarm;
+                $newalarm->prod_id = $prod_id;
+                if($prog != null) $newalarm->prog = $prog;
+                if($deadline != null) $newalarm->deadline = $deadline;
+                
+                $newalarm->save();
+                
+                if($newalarm->prog != null) {
+                    if($stock->ilosc <= $newalarm->prog) $stock->alarm = 1;
+                    if($stock->ilosc > $newalarm->prog) $stock->alarm = 0;
+                    $stock->save();
+                }
+                if($newalarm->deadline != null) {
+                    if(date('Y-m-d\TH:i:sP') >= $newalarm->deadline) {
+                        $stock->alarm = 1;
+                        $stock->save();
+                    }
+                }
+            }
+
+            if($alarms) {
+                if($alarms->prog != null) {
+                    if(($stock->ilosc <= $alarms->prog) || $stock->ilosc <= $prog) $stock->alarm = 1;
+                    if(($stock->ilosc > $alarms->prog) || ($stock->ilosc > $prog)) $stock->alarm = 0;
+                }
+                if($alarms->deadline != null) {
+                    if((date('Y-m-d\TH:i:sP') >= $alarms->deadline) || (date('Y-m-d\TH:i:sP') >= $deadline)) $stock->alarm = 1;
+                    if((date('Y-m-d\TH:i:sP') < $alarms->deadline) || (date('Y-m-d\TH:i:sP') < $deadline)) $stock->alarm = 0;
+                }
+
+                $alarms->prog = $prog;
+                $alarms->deadline = $deadline;
+
+                $alarms->save();
+
+                $stock->save();
+            }
+
             if(isset($page)) {
                 return back()->with('statustext', 'Dane zaktualizowane pomyślnie!')->with('status', true)->withInput();
             } else {
