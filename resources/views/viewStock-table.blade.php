@@ -118,6 +118,23 @@
                         <label class="form-check-label" for="inlineRadio2">Nie</label>
                       </div>
                     </div>
+
+                    <label class="sr-only" for="nazwa">Próg (ilość)</label>
+                    <div class="input-group mb-2 mr-sm-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text modalfield">Próg (ilość)</div>
+                      </div>
+                      <input type="number" name="prog" placeholder="np. &quot;25&quot;" class="form-control">
+                    </div>
+
+                    <label class="sr-only" for="nazwa">Deadline</label>
+                    <div class="input-group mb-2 mr-sm-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text modalfield">Deadline</div>
+                      </div>
+                      <input type="datetime-local" name="typ"  class="form-control">
+                    </div>
+
                     <input type="hidden" name="action" value="edit"/>
                     @if(isset($_GET['page']) && isset($_GET['counter']))
                       <input type="hidden" name="page" value="{{ $_GET['page'] }}" />

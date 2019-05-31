@@ -62,6 +62,9 @@
                 </div>
             </div>
         </div>
+        <div id="footer">
+            {{ date('Y') }} &copy; eMicro Warehouse by <a href="https://michalski.xyz" target="_blank">Michał Michalski</a>
+        </div>
 
         <script type="text/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>

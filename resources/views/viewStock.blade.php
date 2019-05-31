@@ -81,6 +81,37 @@
                       </div>
                       <textarea class="form-control" id="uwagi" name="uwagi" rows="3" placeholder="Dowolne uwagi (notatki) dotyczące produktu."></textarea>
                     </div>
+
+                    <label class="sr-only" for="nazwa">Alarm</label>
+                    <div class="input-group mb-2 mr-sm-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text modalfield">Alarm</div>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="alarm" id="alarmnie" value="1">
+                        <label class="form-check-label" for="inlineRadio1">Tak</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="alarm" id="alarmtak" value="0" checked>
+                        <label class="form-check-label" for="inlineRadio2">Nie</label>
+                      </div>
+                    </div>
+
+                    <label class="sr-only" for="nazwa">Próg (ilość)</label>
+                    <div class="input-group mb-2 mr-sm-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text modalfield">Próg (ilość)</div>
+                      </div>
+                      <input type="number" name="prog" placeholder="np. &quot;25&quot;" class="form-control">
+                    </div>
+
+                    <label class="sr-only" for="nazwa">Deadline</label>
+                    <div class="input-group mb-2 mr-sm-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text modalfield">Deadline</div>
+                      </div>
+                      <input type="datetime-local" name="deadline"  class="form-control">
+                    </div>
                     
                     @if(isset($_GET['page']) && isset($_GET['counter']))
                       <input type="hidden" name="page" value="{{ $_GET['page'] }}" />

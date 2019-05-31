@@ -42,6 +42,19 @@ div.alert {
     font-size:15pt
 }
 
+.page-item.active .page-link {
+  background:rgb(182, 34, 1);
+  border-color:rgb(182, 34, 1);
+}
+
+.page-link {
+  color:rgb(182, 34, 1);
+}
+
+.page-link:hover {
+  color:maroon;
+}
+
 /* End of bootstrap overrides */
 
 .alert .glyphicon{
@@ -78,6 +91,7 @@ div.topmenu.scroll:after {
 div.content {
    padding:10px 5vw 10px 5vw;
    text-align:justify; 
+   z-index:5;
 }
 
 input[type="color"] {
@@ -232,4 +246,25 @@ span.cancel, span.cancel a {
 span.cancel:hover, span.cancel a:hover {
   color:black;
   text-decoration:underline;
+}
+
+#footer {
+  font-style:italic;
+  color:silver;
+  bottom:0;
+  left: 50%;
+transform: translateX(-50%);
+  position:absolute;
+}
+
+#footer:hover {
+  color:grey;
+}
+
+#footer a {
+  color: rgb(165, 142, 137);
+}
+
+#footer a:hover {
+  color:rgb(182, 34, 1);
 }

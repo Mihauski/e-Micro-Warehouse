@@ -32,7 +32,7 @@ class PageController extends Controller
         if (Auth::check()) {
             //$stock = stock::all();
             //Od teraz używamy analogicznego pobierania ale za pomocą klasy Sortable z paginacją co X wpisów
-            $paginate = 5;
+            $paginate = 10;
             $stock = stock::sortable()->orderBy('nazwa', 'asc')->paginate($paginate);
         }
         //compact() przekazuje nam dane w formie uproszczonej i bardziej czytelnej

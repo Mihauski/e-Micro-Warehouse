@@ -25,7 +25,7 @@ class stockDBOps extends Controller
         $stock = \App\stock::find($id);
         $alarms = \App\alarm::where('prod_id', $id)->get();
 
-        if(!$alarms->isEmpty()) {
+        if(!$alarms->isEmpty() && !empty($alarms->prog)) {
             if($stock->ilosc <= $alarms->prog) {
                 $alarm = 1;
             }
@@ -60,14 +60,22 @@ class stockDBOps extends Controller
     }
 
     public function add(Request $request) {
+        //For STOCK item
         $nazwa = $request->nazwa;
         $typ = $request->typ;
         $ilosc = $request->ilosc;
         $jednostka = $request->jednostka;
-        $alarm = 0;
         $uwagi = $request->uwagi ?? null;
         $page = $request->page;
         $counter = $request->counter;
+        $alarm = $request->alarm;
+
+        //For item ALARM
+        if($alarm == 1) {
+            $prod_id = null;
+            $prog = $request->prog;
+            $deadline = $request->deadline;
+        }
 
         $stock = new \App\stock;
         $stock->nazwa = $nazwa;
@@ -79,6 +87,26 @@ class stockDBOps extends Controller
 
         if($nazwa != null && $typ != null && $ilosc != null && ($jednostka != null && strlen($jednostka) <= 3)) {
             if($stock->save()) {
+                //Creating ALARM if set
+                if($alarm == 1) {
+                    $newalarm = new \App\alarm;
+                    $newalarm->prod_id = $stock->id;
+                    if($prog != null) $newalarm->prog = $prog;
+                    if($deadline != null) $newalarm->deadline = $deadline;
+                    $newalarm->save();
+                    //deadline or threshold auto-set
+                    if($newalarm->prog != null) {
+                        if($stock->ilosc <= $newalarm->prog) $stock->alarm = 1;
+                        $stock->save();
+                    }
+                    if($newalarm->deadline != null) {
+                        if(date('Y-m-d\TH:i:sP') >= $newalarm->deadline) {
+                            $stock->alarm = 1;
+                            $stock->save();
+                        }
+                    }
+                }
+
                 if(isset($page)) {
                     return back()->with('statustext', 'Produkt dodany pomyślnie!')->with('status', true);
                 } else {
