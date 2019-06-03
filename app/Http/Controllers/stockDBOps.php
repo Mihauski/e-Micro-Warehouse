@@ -21,28 +21,44 @@ class stockDBOps extends Controller
         $uwagi = $request->uwagi;
         $page = $request->page;
         $counter = $request->counter;
+        $prod_id = $id;
+        $prog = $request->prog;
+        $deadline = $request->deadline;
 
+        //query for item to edit and (if exists) its alarm
         $stock = \App\stock::find($id);
         $alarms = \App\alarm::where('prod_id', $id)->first();
 
-            $prod_id = $id;
-            $prog = $request->prog;
-            $deadline = $request->deadline;
+        //helper variable
+        $prevSet = false;
 
-        if(!$alarms && !empty($alarms->prog)) {
-            if(($stock->ilosc <= $alarms->prog) || ($ilosc <= $alarms->prog)) {
+        //check if conditions met to automatically turn the alarm on
+        if(!($alarms == null) && !empty($alarms->prog)) {
+            if($ilosc <= $alarms->prog) {
                 $alarm = 1;
+                //to acknowledge that it's been set to 1 by other conditions and shouldn't be disabled by deadline cond
+                $prevSet = true;
             }
-            if(($stock->ilosc > $alarms->prog) || ($ilosc > $alarms->prog)) {
+            if($ilosc > $alarms->prog) {
                 $alarm = 0;
             }
         }
-        if(!$alarms && !empty($alarms->deadline)) {
-            if(date('Y-m-d\TH:i:sP') >= $alarms->deadline) {
+        if(!($alarms == null)) {
+            //if(strtotime(date('Y-m-d\TH:i')) >= date('Y-m-d\TH:i', strtotime($deadline)))
+            if(time() - strtotime($deadline) > -7200)
+            {
                 $alarm = 1;
             }
+            //if((strtotime(date('Y-m-d\TH:i')) < date('Y-m-d\TH:i', strtotime($deadline)))) 
+            if((time() - strtotime($deadline) <= -7200) && !$prevSet)
+            {
+                $alarm = 0;
+            }
         }
+        //clear this temp variable. Will be handy later
+        $prevSet = false;
 
+        //assign new values to the item. First four can not be empty, so if they are here, we'll omit these and leave these from DB
         if(!empty($nazwa)) $stock->nazwa = $nazwa;
         if(!empty($typ)) $stock->typ = $typ;
         if(!empty($ilosc)) $stock->ilosc = $ilosc;
@@ -52,36 +68,43 @@ class stockDBOps extends Controller
 
         
         if($stock->save() == true) {
-            //return json_encode("true");
-            if($alarms && $alarm == 1) {
+            //if the alarm doesn't exist, but it has to be set, we'll create a new entry
+            if(($alarms == null) && $alarm == 1) {
                 $newalarm = new \App\alarm;
                 $newalarm->prod_id = $prod_id;
+                //these values can be null, but this is to not override them if they exist in database already and we don't want to change them
                 if($prog != null) $newalarm->prog = $prog;
                 if($deadline != null) $newalarm->deadline = $deadline;
                 
                 $newalarm->save();
                 
                 if($newalarm->prog != null) {
-                    if($stock->ilosc <= $newalarm->prog) $stock->alarm = 1;
+                    if($stock->ilosc <= $newalarm->prog) { $stock->alarm = 1; $prevSet = true;}
                     if($stock->ilosc > $newalarm->prog) $stock->alarm = 0;
                     $stock->save();
                 }
                 if($newalarm->deadline != null) {
-                    if(date('Y-m-d\TH:i:sP') >= $newalarm->deadline) {
+                    if(time() - strtotime($newalarm->deadline) > -7200) {
                         $stock->alarm = 1;
-                        $stock->save();
                     }
+                    if(((time() - strtotime($newalarm->deadline)) <= -7200) && !$prevSet) {
+                        $stock->alarm = 0;
+                    }
+                    $stock->save();
+                    $prevSet = false;
                 }
             }
 
-            if($alarms) {
+            if(!($alarms == null)) {
                 if($alarms->prog != null) {
-                    if(($stock->ilosc <= $alarms->prog) || $stock->ilosc <= $prog) $stock->alarm = 1;
-                    if(($stock->ilosc > $alarms->prog) || ($stock->ilosc > $prog)) $stock->alarm = 0;
+                    if($stock->ilosc <= $prog) {$stock->alarm = 1; $prevSet = true;}
+                    if($stock->ilosc > $prog) $stock->alarm = 0;
                 }
                 if($alarms->deadline != null) {
-                    if((date('Y-m-d\TH:i:sP') >= $alarms->deadline) || (date('Y-m-d\TH:i:sP') >= $deadline)) $stock->alarm = 1;
-                    if((date('Y-m-d\TH:i:sP') < $alarms->deadline) || (date('Y-m-d\TH:i:sP') < $deadline)) $stock->alarm = 0;
+                    //if(strtotime(date('Y-m-d\TH:i')) >= date('Y-m-d\TH:i', strtotime($deadline)))
+                    if(time() - strtotime($deadline) > -7200) $stock->alarm = 1;
+                    //if(strtotime(date('Y-m-d\TH:i')) <  date('Y-m-d\TH:i', strtotime($deadline)))
+                    if((time() - strtotime($deadline) <= -7200) && !$prevSet) $stock->alarm = 0;
                 }
 
                 $alarms->prog = $prog;
@@ -145,10 +168,11 @@ class stockDBOps extends Controller
                     //deadline or threshold auto-set
                     if($newalarm->prog != null) {
                         if($stock->ilosc <= $newalarm->prog) $stock->alarm = 1;
+                        if($stock->ilosc > $newalarm->prog) $stock->alarm = 0;
                         $stock->save();
                     }
                     if($newalarm->deadline != null) {
-                        if(date('Y-m-d\TH:i:sP') >= $newalarm->deadline) {
+                        if(time() - strtotime($newalarm->deadline) > -7200) {
                             $stock->alarm = 1;
                             $stock->save();
                         }
@@ -169,18 +193,26 @@ class stockDBOps extends Controller
             }
         }
     }
-
+//TODO: usuwanie alarmu razem z rekordem produktu dla spójności!
     public function delete(Request $request) {
         $id = $request->id;
         $stock = \App\stock::find($id);
+        //find appropriate alarm if exists
+        $alarms = \App\alarm::where('prod_id', $id)->get();
         $page = $request->page;
         $counter = $request->counter;
 
         if($stock->count() > 0) {
             if(($stock->delete() == true)) {
                 if(isset($page)) {
+                    if(!($alarms == null)) {
+                        $alarms->each->delete();
+                    }
                     return back()->with('statustext', 'Produkt usunięty!')->with('status', true);
                 } else {
+                    if(!($alarms == null)) {
+                        $alarms->each->delete();
+                    }
                     return back()->with('statustext', 'Produkt usunięty!')->with('status', true);
                 }
             }
