@@ -8,5 +8,5 @@ use Kyslik\ColumnSortable\Sortable;
 class stock extends Model
 {
     use Sortable;
-    public $sortable = ['nazwa', 'typ', 'ilosc', 'jednostka', 'alarm'];
+    public $sortable = ['nazwa', 'typ', 'ilosc', 'jednostka', 'updated_at', 'alarm'];
 }

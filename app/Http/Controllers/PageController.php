@@ -10,6 +10,7 @@ use App\alarm;
 
 class PageController extends Controller
 {
+    private $paginate = 10;
     //page controller
     public function home() {
         return view('home');
@@ -57,9 +58,18 @@ class PageController extends Controller
     public function stockadd() {
         return view('viewStock', ['action' => 'addProduct']);
     }
-
     public function reminders() {
-        return view('listReminders');
+        
+        $paginate = 10;
+        //tutaj kod inicjujący podstr. "Alarmy"
+        //nie ma sensu fatygować bazy jeśli ktoś niezalogowany próbuje uzyskać dostęp...
+        if(Auth::check()) {
+            //tłusty JOIN na dobry początek dnia, żeby nie iterować 2x foreach w widoku
+            $res = alarm::sortable()
+            ->join('stocks', 'alarms.prod_id', '=', 'stocks.id')
+            ->select('alarms.*', 'stocks.nazwa', 'stocks.uwagi', 'stocks.alarm')->paginate($paginate);
+        }
+        return view('listReminders', compact('res','paginate'));
     }
 
     public function remindersadd() {

@@ -244,7 +244,7 @@ class stockDBOps extends Controller
                 return view('viewStock', compact('stock','val','con','paginate'))->with('statustext', 'Nie znaleziono produktów spełniających kryteria.')->with('status',false);
             }
         } else {
-            if(!isset($paginate)) $paginate = 5;
+            if(!isset($paginate)) $paginate = 10;
             $stock = stock::sortable()->orderBy('nazwa', 'asc')->paginate($paginate);
             return view('viewStock', compact('paginate','stock'));
         }      

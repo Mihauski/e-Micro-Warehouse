@@ -8,6 +8,7 @@
                   <th>@sortablelink('jednostka', 'Jednostka')</th>
                   <th>Uwagi</th>
                   <th>@sortablelink('alarm', 'Alarm')</th>
+                  <th>@sortablelink('updated_at', 'Edytowano')</th>
                   <th>Akcje</th>
                 </tr>
               </thead>
@@ -27,7 +28,7 @@
                   <td>{{ $item->typ }}</td>
                   <td>{{ $item->ilosc }}</td>
                   <td>{{ $item->jednostka }}</td>
-                  <td>
+                  <td class="uwagi">
                   @if($item->uwagi == null)(brak)
                   @else
                     <button class="collapsible">Pokaż   <i class="fas fa-plus"></i></button>
@@ -37,6 +38,7 @@
                   @endif
                   </td>
                   <td>@if($item->alarm === 1) <font color="red"><b>TAK</b></font> @else NIE @endif</td>
+                  <td>{{ $item->updated_at }}</th>
                   <td class="stockAction"><button class="btn btn-outline-primary btn-sm openmodal"><i class="far fa-edit"></i> Edytuj</button>
                   <!-- The Modal -->
                   <div class="modal">
@@ -46,7 +48,6 @@
 
                   <form action="{{ url('stock/edit')}}" method="post" autocomplete="off">
                     @csrf
-                    <input type="text" name="paginate" value="{{ $paginate }}" hidden/>
                     <label class="sr-only" for="id">ID</label>
                       <div class="input-group mb-2 mr-sm-2">
                         <div class="input-group-prepend">

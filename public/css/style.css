@@ -55,6 +55,15 @@ div.alert {
   color:maroon;
 }
 
+.table-hover tbody tr:hover {
+  background-color:rgba(142, 191, 253, 0.1);
+}
+
+label.form-check-label {
+  color:black;
+  font-weight:normal;
+}
+
 /* End of bootstrap overrides */
 
 .alert .glyphicon{
@@ -122,8 +131,14 @@ sup.menualarm {
     top:-5px;
 }
 
-tr.alarm {
-    background-color:rgba(255, 0, 0, 0.3) !important;
+.alarm td {
+    /* background-color:rgba(255, 0, 0, 0.3) !important; */
+    color:red;
+    font-weight:bold;
+}
+
+.alarm td:hover {
+  color:red!important;
 }
 
 td.stockAction {
@@ -169,6 +184,7 @@ button.openmodaladd {
     transition: max-height 0.2s ease-out;
     border-bottom-left-radius:5px;
     border-bottom-right-radius:5px;
+    text-align:left;
   }
 
   /* The Modal (background) */
@@ -250,21 +266,20 @@ span.cancel:hover, span.cancel a:hover {
 
 #footer {
   font-style:italic;
-  color:silver;
-  bottom:0;
-  left: 50%;
-transform: translateX(-50%);
-  position:absolute;
-}
-
-#footer:hover {
-  color:grey;
+  color:rgba(220,220,200,.8);
+  float:right;
 }
 
 #footer a {
-  color: rgb(165, 142, 137);
+  color: rgb(210,210,210,.7);
 }
 
 #footer a:hover {
-  color:rgb(182, 34, 1);
+  color:rgba(182, 34, 1,.9);
+}
+
+td.uwagi {
+  width:15vw;
+  font-weight:normal;
+  color:black;
 }
