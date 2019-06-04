@@ -41,7 +41,7 @@
                   <div class="modal-content">
                   <span class="close">&times; <font size="5pt">Zamknij</font></span>
 
-                  <form action="{{ url('stock/edit')}}" method="post" autocomplete="off">
+                  <form action="{{ url('reminders/edit')}}" method="post" autocomplete="off">
                     @csrf
                     <label class="sr-only" for="id">ID alarmu</label>
                       <div class="input-group mb-2 mr-sm-2">
