@@ -6,7 +6,20 @@
 
 <!-- rozpoczyna sekcję "content" -->
 @section('content')
-
+@if((!(session()->get('status') === null)) || isset($status))
+      <div class="alert @if((session()->get('status') == true) || $status == true) alert-success @elseif((session()->get('status') == false) || $status == false) alert-danger @endif">
+        <div class="glyphicon">
+        @if((session()->get('status') == true) || $status == true) <i class="fas fa-check-circle"></i> @elseif((session()->get('status') == false) || $status=false) <i class="fas fa-times-circle"></i> @endif
+        </div>
+        <div>
+        @if((!(session()->get('status') === null)))
+          {{ session()->get('statustext') }}
+        @elseif(isset($statustext))
+          {{ $statustext }}
+        @endif
+        </div>
+      </div>
+    @endif
 <h2>Alarmy <small class="text-muted">na dzień {{ date('d-m-Y') }}</small></h2>
 
 <table class="table table-striped table-hover justify-content-center">
@@ -100,7 +113,7 @@
                       @endphp
                       <input type="datetime-local" name="deadline" @if($date) value="{{ date('Y-m-d\TH:i', strtotime($date)) }}" @endif  class="form-control">
                     </div>
-
+                    <input type="hidden" name="ilosc" value="{{ $item->ilosc }}"/>
                     <input type="hidden" name="action" value="edit"/>
                     @if(isset($_GET['page']) && isset($_GET['counter']))
                       <input type="hidden" name="page" value="{{ $_GET['page'] }}" />
@@ -120,7 +133,7 @@
                   <div class="modal-content">
                   <span class="closedel">&times; <font size="5pt">Zamknij</font></span>
 
-                  <form action="{{ url('stock/delete') }}" method="post" autocomplete="off">
+                  <form action="{{ url('reminders/delete') }}" method="post" autocomplete="off">
                   <input type="text" name="paginate" value="{{ $paginate }}" hidden/>
                     @csrf
                     <h3>Czy chcesz usunąć ten produkt?</h3>

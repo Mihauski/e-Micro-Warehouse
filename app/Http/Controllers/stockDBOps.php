@@ -193,7 +193,7 @@ class stockDBOps extends Controller
             }
         }
     }
-//TODO: usuwanie alarmu razem z rekordem produktu dla spójności!
+
     public function delete(Request $request) {
         $id = $request->id;
         $stock = \App\stock::find($id);

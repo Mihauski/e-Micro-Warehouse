@@ -11,6 +11,28 @@ use App\alarm;
 class PageController extends Controller
 {
     private $paginate = 10;
+
+    function smartCheck($alarms) {
+        $prevSet = false;
+        //funkcja sprawdzająca, czy są warunki do uruchomienia alarmu przy przeładowaniu strony
+        foreach($alarms as $alarm) {
+            $stock = \App\stock::find($alarm->prod_id);
+            //jeśli znaleziono odpowiedni produkt
+            if($stock != null) {
+                if($alarm->prog != null) {
+                    if($stock->ilosc <= $alarm->prog) {$stock->alarm = 1; $prevSet = true;}
+                    if($stock->ilosc > $alarm->prog) $stock->alarm = 0;
+                }
+                if($alarm->deadline != null) {
+                    //-7200 to correct two-hours inconsistency
+                    if(time() - strtotime($alarm->deadline) > -7200) $stock->alarm = 1;
+                    if((time() - strtotime($alarm->deadline) <= -7200) && !$prevSet) $stock->alarm = 0;
+                }
+                $stock->save();
+            }
+        }
+    }
+
     //page controller
     public function home() {
         return view('home');
@@ -34,8 +56,10 @@ class PageController extends Controller
             //$stock = stock::all();
             //Od teraz używamy analogicznego pobierania ale za pomocą klasy Sortable z paginacją co X wpisów
             $paginate = 10;
-            $stock = stock::sortable()->orderBy('nazwa', 'asc')->paginate($paginate);
             $alarm = alarm::all();
+            //funkcja automatycznego sprawdzania, czy zaszły warunki do uruchomienia alarmu
+            $this->smartCheck($alarm);
+            $stock = stock::sortable()->orderBy('nazwa', 'asc')->paginate($paginate);
         }
         //compact() przekazuje nam dane w formie uproszczonej i bardziej czytelnej
         return view('viewStock', compact('stock', 'alarm', 'paginate'));
@@ -67,7 +91,8 @@ class PageController extends Controller
             //tłusty JOIN na dobry początek dnia, żeby nie iterować 2x foreach w widoku
             $res = alarm::sortable()
             ->join('stocks', 'alarms.prod_id', '=', 'stocks.id')
-            ->select('alarms.*', 'stocks.nazwa', 'stocks.uwagi', 'stocks.alarm')->paginate($paginate);
+            ->select('alarms.*', 'stocks.nazwa', 'stocks.uwagi', 'stocks.alarm', 'stocks.ilosc')->paginate($paginate);
+            $this->smartCheck($res);
         }
         return view('listReminders', compact('res','paginate'));
     }
