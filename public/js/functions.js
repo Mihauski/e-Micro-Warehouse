@@ -114,6 +114,33 @@ $(document).ready(function() {
     }
 });
 
+//modal dla zmiany hasła
+$(document).ready(function() {
+  //modal Window
+  //catch all modals
+  var modals = document.getElementsByClassName('modalpwd');
+  // Get the buttons that opens the modal
+  var btns = document.getElementsByClassName("openmodalpwd");
+  //get the close buttons
+  var spans=document.getElementsByClassName("closepwd");
+
+  for(let i=0;i<btns.length;i++){
+      btns[i].onclick = function() {
+          modals[i].style.display = "block";
+      }
+  }
+  for(let i=0;i<spans.length;i++){
+      spans[i].onclick = function() {
+          modals[i].style.display = "none";
+      }
+      window.onclick = function(event) {
+        if (event.target == modals[i]) {
+          modals[i].style.display = "none";
+        }
+      }
+    }
+});
+
 // -- koniec modali --
 
 

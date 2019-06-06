@@ -3,9 +3,12 @@
         //Importy dla modeli poszczególnych tabel
         use App\alarm;
         use App\stock;
+        use App\User;
 
         if (Auth::check()) {
             $alarms = stock::where('alarm',1)->count();
+            $id = Auth::id();
+            $role = \App\User::find($id)->role;
         }
 @endphp
 
@@ -39,7 +42,7 @@
                                         <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'panel')) active @endif" href="{{ url('panel') }}">Panel Kontrolny</a>
                                         <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'stock')) active @endif" href="{{ url('stock') }}">Magazyn</a>
                                         <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'reminders')) active @endif" href="{{ url('reminders') }}">Alarmy @if(isset($alarms) && ($alarms > 0) && (Auth::check()))<sup class="menualarm">{{$alarms}}</sup>@endif</a>
-                                        <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'users')) active @endif" href="{{ url('users') }}">Użytkownicy</a>
+                                       @if($role == 'admin') <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'users')) active @endif" href="{{ url('users') }}">Użytkownicy</a> @endif
                                         <a class="nav-link @if (strstr($_SERVER['REQUEST_URI'], 'myaccount')) active @endif" href="{{ url('myaccount')}}">Moje Konto</a>
                                     @endif
                                     @guest

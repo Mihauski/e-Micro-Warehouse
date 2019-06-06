@@ -7,6 +7,7 @@ use Auth;
 //Importy dla modeli poszczególnych tabel
 use App\stock;
 use App\alarm;
+use App\User;
 
 class PageController extends Controller
 {
@@ -102,7 +103,18 @@ class PageController extends Controller
     }
 
     public function users() {
-        return view('manageUsers');
+        $paginate = 10;
+        if(Auth::check()) {
+            $id = Auth::id();
+            $check = \App\User::find($id);
+            $role = $check->role;
+            if($role == 'admin') {
+                $users = User::sortable('id','name','email','role','created_at')->paginate($paginate);
+                return view('manageUsers', compact('users','id'))->with('verified',true);
+            } else {
+                return view('manageUsers')->with('statustext', 'Brak wymaganych uprawnień do wyświetlenia tej strony.')->with('status',false);
+            }
+        }
     }
 
     public function usersadd() {

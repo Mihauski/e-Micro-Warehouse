@@ -188,7 +188,7 @@ button.openmodaladd {
   }
 
   /* The Modal (background) */
-.modal, .modaldel, .modaladd {
+.modal, .modaldel, .modaladd, .modalpwd {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1001; /* Sit on top */
@@ -223,7 +223,7 @@ button.openmodaladd {
   }
   
   /* The Close Button */
-  .close, .closedel, .closeadd {
+  .close, .closedel, .closeadd, .closepwd {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
@@ -236,7 +236,7 @@ button.openmodaladd {
   }
   
   .close:hover,
-  .close:focus, .closedel:hover, .closedel:focus, .closeadd:focus, .closeadd:hover {
+  .close:focus, .closedel:hover, .closedel:focus, .closeadd:focus, .closeadd:hover, .closepwd:hover, .closepwd:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
