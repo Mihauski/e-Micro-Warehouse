@@ -39,7 +39,7 @@ class myaccountDBOps extends Controller
             if($request->id == $id) {
                 $user = \App\User::find($request->id);
                 if($user !== null) {
-                    if(isset($request->pass)) $user->password = Hash::make($request->pass);
+                    if(isset($request->password)) $user->password = Hash::make($request->password);
                     
                     if($user->save()) {
                         return back()->with('statustext', 'Zmiana hasła pomyślna!')->with('status', true);

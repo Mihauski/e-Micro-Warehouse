@@ -110,7 +110,7 @@ class PageController extends Controller
         if(Auth::check()) {
             if($this->checkRole() == 'admin') {
                 $users = User::sortable('id','name','email','role','created_at')->paginate($paginate);
-                return view('manageUsers', compact('users','id'))->with('verified',true);
+                return view('manageUsers', compact('users'))->with('verified',true);
             } else {
                 return view('manageUsers')->with('statustext', 'Brak wymaganych uprawnień do wyświetlenia tej strony.')->with('status',false);
             }
