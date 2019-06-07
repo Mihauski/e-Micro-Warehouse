@@ -53,7 +53,6 @@ class usersDBOps extends Controller
             if($user !== null) {
                 if(isset($request->name)) $user->name = $request->name;
                 if(isset($request->email)) $user->email = $request->email;
-                if(isset($request->pass)) $user->password = Hash::make($request->pass);
                 if(isset($request->role) && $user->id != 1) {$user->role = $request->role;} else {
                     return back()->with('statustext', 'Główny administrator nie może być zdegradowany!')->with('status', false);
                 }

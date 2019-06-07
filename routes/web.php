@@ -30,6 +30,8 @@ Route::post('/users/edit', 'usersDBOps@edit')->middleware('auth');
 Route::post('/users/delete', 'usersDBOps@delete')->middleware('auth');
 Route::post('/users/editpwd', 'usersDBOps@editpwd')->middleware('auth');
 Route::get('/myaccount', 'PageController@myaccount')->middleware('auth');
+Route::post('/myaccount/edit', 'myaccountDBOps@edit')->middleware('auth');
+Route::post('/myaccount/editpwd', 'myaccountDBOps@editpwd')->middleware('auth');
 Route::get('/test', 'PageController@test');
 Route::get('/stock/refresh', 'PageController@refreshStock')->middleware('auth');
 Auth::routes();

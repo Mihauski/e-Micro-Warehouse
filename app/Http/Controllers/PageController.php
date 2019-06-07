@@ -113,7 +113,11 @@ class PageController extends Controller
     }
 
     public function myaccount() {
-        return view('myAccount');
+        if(Auth::check()) {
+            $id = Auth::id();
+            $user = \App\User::find($id)->select('id','name','email','role')->first();
+        }
+        return view('myAccount', compact('user'));
     }
 
     public function test() {
