@@ -25,10 +25,11 @@ Route::get('/reminders', 'PageController@reminders')->middleware('auth');
 Route::post('/reminders/edit', 'remindersDBOps@edit')->middleware('auth');
 Route::post('/reminders/delete', 'remindersDBOps@delete')->middleware('auth');
 Route::get('/users', 'PageController@users')->middleware('auth');
-Route::get('/users/add', 'PageController@usersadd')->middleware('auth');
+Route::post('/users/add', 'usersDBOps@add')->middleware('auth');
+Route::post('/users/edit', 'usersDBOps@edit')->middleware('auth');
+Route::post('/users/delete', 'usersDBOps@delete')->middleware('auth');
+Route::post('/users/editpwd', 'usersDBOps@editpwd')->middleware('auth');
 Route::get('/myaccount', 'PageController@myaccount')->middleware('auth');
 Route::get('/test', 'PageController@test');
 Route::get('/stock/refresh', 'PageController@refreshStock')->middleware('auth');
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

@@ -14,27 +14,40 @@ class PageController extends Controller
     private $paginate = 10;
 
     function smartCheck($alarms) {
-        $prevSet = false;
-        //funkcja sprawdzająca, czy są warunki do uruchomienia alarmu przy przeładowaniu strony
-        foreach($alarms as $alarm) {
-            $stock = \App\stock::find($alarm->prod_id);
-            //jeśli znaleziono odpowiedni produkt
-            if($stock != null) {
-                if($alarm->prog != null) {
-                    if($stock->ilosc <= $alarm->prog) {$stock->alarm = 1; $prevSet = true;}
-                    if($stock->ilosc > $alarm->prog) $stock->alarm = 0;
+        if (Auth::check()) {
+            $prevSet = false;
+            //funkcja sprawdzająca, czy są warunki do uruchomienia alarmu przy przeładowaniu strony
+            foreach($alarms as $alarm) {
+                $stock = \App\stock::find($alarm->prod_id);
+                //jeśli znaleziono odpowiedni produkt
+                if($stock != null) {
+                    if($alarm->prog != null) {
+                        if($stock->ilosc <= $alarm->prog) {$stock->alarm = 1; $prevSet = true;}
+                        if($stock->ilosc > $alarm->prog) $stock->alarm = 0;
+                    }
+                    if($alarm->deadline != null) {
+                        //-7200 to correct two-hours inconsistency
+                        if(time() - strtotime($alarm->deadline) > -7200) $stock->alarm = 1;
+                        if((time() - strtotime($alarm->deadline) <= -7200) && !$prevSet) $stock->alarm = 0;
+                    }
+                    $stock->save();
                 }
-                if($alarm->deadline != null) {
-                    //-7200 to correct two-hours inconsistency
-                    if(time() - strtotime($alarm->deadline) > -7200) $stock->alarm = 1;
-                    if((time() - strtotime($alarm->deadline) <= -7200) && !$prevSet) $stock->alarm = 0;
-                }
-                $stock->save();
             }
         }
     }
 
-    //page controller
+    function checkRole() {
+        if (Auth::check()) {
+            $id = Auth::id();
+            $check = \App\User::find($id);
+            $role = $check->role;
+            $check = null;
+            $id = null;
+
+            return $role;
+        }
+    }
+
     public function home() {
         return view('home');
     }
@@ -45,10 +58,6 @@ class PageController extends Controller
 
     public function login() {
         return view('login');
-    }
-
-    public function lostpass() {
-        return view('login', ['action' => 'lostpass']);
     }
 
     public function stock() {
@@ -76,13 +85,6 @@ class PageController extends Controller
         return response()->json(compact('html'));
     }
 
-    public function stocksearch() {
-        return view('viewStock', ['action' => 'search']);
-    }
-
-    public function stockadd() {
-        return view('viewStock', ['action' => 'addProduct']);
-    }
     public function reminders() {
         
         $paginate = 10;
@@ -98,27 +100,16 @@ class PageController extends Controller
         return view('listReminders', compact('res','paginate'));
     }
 
-    public function remindersadd() {
-        return view('listReminders', ['action' => 'addReminder']);
-    }
-
     public function users() {
         $paginate = 10;
         if(Auth::check()) {
-            $id = Auth::id();
-            $check = \App\User::find($id);
-            $role = $check->role;
-            if($role == 'admin') {
+            if($this->checkRole() == 'admin') {
                 $users = User::sortable('id','name','email','role','created_at')->paginate($paginate);
                 return view('manageUsers', compact('users','id'))->with('verified',true);
             } else {
                 return view('manageUsers')->with('statustext', 'Brak wymaganych uprawnień do wyświetlenia tej strony.')->with('status',false);
             }
         }
-    }
-
-    public function usersadd() {
-        return view('manageUsers', ['action' => 'addUser']);
     }
 
     public function myaccount() {

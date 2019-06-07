@@ -7,9 +7,9 @@
 <!-- rozpoczyna sekcję "content" -->
 @section('content')
 @if((!(session()->get('status') === null)) || isset($status))
-      <div class="alert @if((session()->get('status') == true) || $status == true) alert-success @elseif((session()->get('status') == false) || $status == false) alert-danger @endif">
+      <div class="alert @if((session()->get('status') == true) || ($status ?? 'null' === true)) alert-success @elseif((session()->get('status') == false) || ($status ?? 'null' == false)) alert-danger @endif">
         <div class="glyphicon">
-        @if((session()->get('status') == true) || $status == true) <i class="fas fa-check-circle"></i> @elseif((session()->get('status') == false) || $status=false) <i class="fas fa-times-circle"></i> @endif
+        @if((session()->get('status') == true) || ($status ?? 'null' === true)) <i class="fas fa-check-circle"></i> @elseif((session()->get('status') == false) || ($status ?? 'null' == false)) <i class="fas fa-times-circle"></i> @endif
         </div>
         <div>
         @if((!(session()->get('status') === null)))
@@ -20,8 +20,10 @@
         </div>
       </div>
     @endif
- @if(isset($status) && $status === false)
+ @if(isset($status))
+  @if($status === false)
  Brak uprawnień do wyświetlenia strony.
+  @endif
  @else
 <h2>Użytkownicy <small class="text-muted">dodawanie, edycja, usuwanie</small></h2>
 
@@ -34,12 +36,40 @@
 
                   <form action="{{ url('users/add') }}" method="post" autocomplete="off">
                     @csrf
+                    <h3>Dodaj nowego użytkownika</h3>
                     <label class="sr-only" for="nazwa">Nazwa</label>
                     <div class="input-group mb-2 mr-sm-2">
                       <div class="input-group-prepend">
                         <div class="input-group-text modalfield">Nazwa</div>
                       </div>
                       <input type="text" name="name" placeholder="Imię i nazwisko użytkownika" class="form-control" required>
+                    </div>
+
+                    <label class="sr-only" for="nazwa">E-mail</label>
+                    <div class="input-group mb-2 mr-sm-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text modalfield">E-mail</div>
+                      </div>
+                      <input type="text" name="email" placeholder="E-mail użytkownika" class="form-control" required>
+                    </div>
+
+                    <label class="sr-only" for="rola">Rola</label>
+                    <div class="input-group mb-2 mr-sm-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text modalfield">Rola</div>
+                      </div>
+                      <select class="form-control modalselect" name="role" required>
+                          <option value="admin">Administrator</option>
+                          <option value="user" selected>Użytkownik</option>
+                      </select>
+                    </div>
+
+                    <label class="sr-only" for="nazwa">Hasło</label>
+                    <div class="input-group mb-2 mr-sm-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text modalfield">Hasło</div>
+                      </div>
+                      <input type="password" name="pass" minlength="8" placeholder="Hasło do konta użytkownika" class="form-control" autocomplete="new-password" required>
                     </div>
                     
                     @if(isset($_GET['page']) && isset($_GET['counter']))
@@ -78,7 +108,7 @@
                   <td><b>{{ $counter++ }}</b></td>
                   <td>{{ $user->name }}</td>
                   <td>{{ $user->email }}</td>
-                  <td>{{ $user->role }}</td>
+                  <td>@if($user->role == 'admin')Administrator @elseif($user->role == 'user')Użytkownik @endif</td>
                   <td>{{ $user->created_at }}
                   <td class="stockAction" style="width:20%;">
 
@@ -120,7 +150,7 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text modalfield">Rola</div>
                       </div>
-                      <select class="form-control modalselect" name="rola" required>
+                      <select class="form-control modalselect" name="role" required>
                           <option value="admin" @if($user->role == 'admin') selected @endif>Administrator</option>
                           <option value="user" @if($user->role == 'user') selected @endif>Użytkownik</option>
                       </select>
@@ -154,22 +184,21 @@
                         <input type="text" name="id" value="{{ $user->id }}" class="form-control" readonly>
                     </div>
 
+                    <label class="sr-only" for="email">E-Mail</label>
+                    <div class="input-group mb-2 mr-sm-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text modalfield">E-Mail</div>
+                      </div>
+                      <input type="text" name="email" value="{{ $user->email }}" class="form-control" disabled>
+                    </div>
+
                     <label class="sr-only" for="nazwa">Hasło</label>
                     <div class="input-group mb-2 mr-sm-2">
                       <div class="input-group-prepend">
                         <div class="input-group-text modalfield">Hasło</div>
                       </div>
-                      <input id="pass1" type="password" name="password" minlength="8" placeholder="Wpisz nowe hasło" class="form-control" required>
+                      <input type="password" name="password" minlength="8" placeholder="Wpisz nowe hasło" autocomplete="new-password" class="form-control" required>
                     </div>
-
-                    <label class="sr-only" for="nazwa">Powtórz</label>
-                    <div class="input-group mb-2 mr-sm-2">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text modalfield">Powtórz</div>
-                      </div>
-                      <input id="pass2" type="password" placeholder="Powtórz wpisane hasło" class="form-control" required>
-                    </div>
-                      
                     
                     @if(isset($_GET['page']) && isset($_GET['counter']))
                       <input type="hidden" name="page" value="{{ $_GET['page'] }}" />
@@ -177,7 +206,7 @@
                     @endif
                     <input type="hidden" name="csrf" value="{{ csrf_token() }}"/>
 
-                      <input type="submit" value="Dodaj produkt" class="btn btn-outline-success float-right" name="submit">
+                      <input type="submit" value="Zmień hasło" class="btn btn-warning float-right" name="submit">
                   </form> 
                   </div>
                   </div>
@@ -230,11 +259,7 @@
                 @endforeach
               </tbody>
             </table>
-            <div class="legend">
-                <span style="font-weight:500;">Legenda: </span>
-            <i class="fas fa-square-full" style="color:red; padding-left:10px;"></i> <i>&mdash; alarm trwający</i>
-            <i class="fas fa-square-full" style="padding-left:10px;"></i> <i>&mdash; alarm ustawiony (czuwanie)</i>
-            </div>
+
             {!! $users->appends(\Request::except('page'))->appends('counter', $counter)->render() !!}
 
 @endif

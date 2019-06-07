@@ -145,6 +145,7 @@ $(document).ready(function() {
 
 
 
+
 /*  //AJAX FORM CODE
     $('form').submit(function(event) {
       var modals = document.getElementsByClassName('modal');
