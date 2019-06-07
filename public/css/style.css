@@ -8,6 +8,18 @@
     color:rgb(182, 34, 1);
 }
 
+th a {
+  color:rgb(58, 160, 255);
+}
+
+a {
+  color:rgb(226, 68, 32);
+}
+
+a:hover {
+  color:maroon;
+}
+
 a.navbar-brand {
     margin-left:40px;
 }
@@ -282,4 +294,25 @@ td.uwagi {
   width:15vw;
   font-weight:normal;
   color:black;
+}
+
+.paneltop {
+  margin-top:25px;
+  margin-bottom:25px;
+}
+
+.paneltop > .col-4 {
+  background-color:#fff7df;
+  padding:20px 40px 20px 40px;
+  text-align:center;
+  width:100vw;
+  border-radius:15px;
+}
+
+.col-4 p {
+  font-size:14pt;
+}
+
+p.warning {
+  color:red;
 }

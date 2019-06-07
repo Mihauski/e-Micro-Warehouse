@@ -1,5 +1,7 @@
 @extends('layout')
 
+@section('title','Moje konto :: eMW')
+
 @section('content')
 @if((!(session()->get('status') === null)) || isset($status))
       <div class="alert @if((session()->get('status') == true) || ($status ?? 'null' === true)) alert-success @elseif((session()->get('status') == false) || ($status ?? 'null' == false)) alert-danger @endif">

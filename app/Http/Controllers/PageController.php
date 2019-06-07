@@ -53,7 +53,12 @@ class PageController extends Controller
     }
 
     public function panel() {
-        return view('panel');
+        $id = Auth::id();
+        $user = \App\User::select('name')->where('id', $id)->first();
+        $alarms = \App\alarm::all()->count();
+        $stock_amount = \App\stock::all()->count();
+        $stock_alarms = \App\stock::where('alarm', 1)->count();
+        return view('panel', compact('user', 'alarms', 'stock_amount', 'stock_alarms'));
     }
 
     public function login() {
@@ -115,7 +120,7 @@ class PageController extends Controller
     public function myaccount() {
         if(Auth::check()) {
             $id = Auth::id();
-            $user = \App\User::find($id)->select('id','name','email','role')->first();
+            $user = \App\User::select('id','name','email','role')->where('id', $id)->first();
         }
         return view('myAccount', compact('user'));
     }
