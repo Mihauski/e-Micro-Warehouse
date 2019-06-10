@@ -52,7 +52,9 @@ class usersDBOps extends Controller
             $user = \App\User::find($request->id);
             if($user !== null) {
                 if(isset($request->name)) $user->name = $request->name;
-                if(isset($request->email)) $user->email = $request->email;
+                if(isset($request->email) && ($user->id != 1)) {$user->email = $request->email;} else {
+                    return back()->with('statustext', 'Tylko główny administrator może zmienić swój email!')->with('status', false);
+                }
                 if(isset($request->role) && $user->id != 1) {$user->role = $request->role;} else {
                     return back()->with('statustext', 'Główny administrator nie może być zdegradowany!')->with('status', false);
                 }
@@ -72,7 +74,9 @@ class usersDBOps extends Controller
         if($this->checkRole() == 'admin') {
             $user = \App\User::find($request->id);
             if($user !== null) {
-                if(isset($request->password)) $user->password = Hash::make($request->password);
+                if(isset($request->password) && ($user->id != 1)) {$user->password = Hash::make($request->password);} else {
+                    return back()->with('statustext', 'Tylko główny administrator może zmienić swoje hasło!')->with('status', false);
+                }
 
                 if($user->save()) {
                     return back()->with('statustext', 'Hasło zostało zmienione!')->with('status', true);
@@ -88,14 +92,16 @@ class usersDBOps extends Controller
     public function delete(Request $request) {
         if($this->checkRole() == 'admin') {
             $user = \App\User::find($request->id);
-            if($user !== null) {
+            if(($user !== null) && ($user->id != 1)) {
                 if($user->delete()) {
                     return back()->with('statustext', 'Użytkownik usunięty!')->with('status', true);
                 } else {
                     return back()->with('statustext', 'Nie udało się usunąć użytkownika.')->with('status', false);
                 }
+            } else if($user->id == 1) {
+                return back()->with('statustext', 'Nie można usunąć głównego administratora!')->with('status', false);
             } else {
-                return back()->with('statustext', 'Nie znaleziono takiego użytkownika.')->with('status', false);
+                return back()->with('statustext', 'Nie znaleziono użytkownika.')->with('status', false);
             }
         }
     }
